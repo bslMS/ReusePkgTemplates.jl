@@ -3,5 +3,11 @@ uuid = "5fa6b6e1-399e-47f9-ab13-289ea1759384"
 authors = ["Guido Wolf Reichert <gwr@bsl-support.de>", "contributors"]
 version = "0.1.0"
 
+[deps]
+PkgTemplates = "14b8a8f1-9102-5b29-a752-f990bacb7fe1"
+ReuseLicensing = "de4d323f-34a2-45c1-b1df-90653b04f4ca"
+
 [compat]
 julia = "1.10"
+PkgTemplates = "0.7"
+ReuseLicensing = "0.1"
