@@ -1,0 +1,106 @@
+<!--
+SPDX-FileCopyrightText: 2026 Guido Wolf Reichert <gwr@bsl-support.de>
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 550 472"
+    role="img"
+    aria-labelledby="title desc"
+>
+    <title id="title">ReusePkgTemplates.jl logo-dark</title>
+    <desc id="desc">
+        A blueprint-style package box surrounded by four clear reuse arrows in Julia-inspired colors.
+    </desc>
+
+    <defs>
+        <style>
+            .guide {
+                fill: none;
+                stroke: #303030;
+                stroke-width: 2;
+                stroke-linecap: square;
+                stroke-linejoin: miter;
+            }
+
+            .box {
+                fill: none;
+                stroke: #d8d8d8;
+                stroke-width: 7.25;
+                stroke-linecap: square;
+                stroke-linejoin: miter;
+            }
+
+            .arrow {
+                stroke-width: 6.875;
+                stroke-linecap: square;
+                stroke-linejoin: miter;
+                stroke-miterlimit: 8;
+            }
+
+            .green {
+                fill: #6cc24a;
+                stroke: #6cc24a;
+            }
+
+            .purple {
+                fill: #c678dd;
+                stroke: #c678dd;
+            }
+
+            .blue {
+                fill: #4fc3f7;
+                stroke: #4fc3f7;
+            }
+
+            .orange {
+                fill: #ff9a56;
+                stroke: #ff9a56;
+            }
+        </style>
+    </defs>
+
+    <path
+        class="arrow green"
+        d="M 108.5 104.5 V 63.375 C 108.5 40.662 126.912 22.25 149.625 22.25 H 182 V 10.5 L 205.5 34 L 182 57.5 V 45.75 H 149.625 C 139.891 45.75 132 53.641 132 63.375 V 104.5 Z"
+    />
+    <path
+        class="arrow purple"
+        d="M 443.5 37.5 H 484.625 C 507.338 37.5 525.75 55.912 525.75 78.625 V 111 H 537.5 L 514 134.5 L 490.5 111 H 502.25 V 78.625 C 502.25 68.891 494.359 61 484.625 61 H 443.5 Z"
+    />
+    <path
+        class="arrow blue"
+        d="M 416.5 366.5 V 407.625 C 416.5 430.338 398.088 448.75 375.375 448.75 H 344 V 460.5 L 320.5 437 L 344 413.5 V 425.25 H 375.375 C 385.109 425.25 393 417.359 393 407.625 V 366.5 Z"
+    />
+    <path
+        class="arrow orange"
+        d="M 103.5 437.5 H 62.375 C 39.662 437.5 21.25 419.088 21.25 396.375 V 365 H 9.5 L 33 341.5 L 56.5 365 H 44.75 V 396.375 C 44.75 406.109 52.641 414 62.375 414 H 103.5 Z"
+    />
+
+    <path class="guide" d="M 76 183.68 H 124.5" />
+    <path class="guide" d="M 76 365.5 H 124.5" />
+    <path class="guide" d="M 322.32 365.5 H 370.82" />
+    <path class="guide" d="M 422.5 265.32 H 471" />
+    <path class="guide" d="M 422.5 83.5 H 471" />
+    <path class="guide" d="M 224.68 83.5 H 273.18" />
+
+    <path class="guide" d="M 124.5 135.18 V 183.68" />
+    <path class="guide" d="M 124.5 365.5 V 414" />
+    <path class="guide" d="M 322.32 365.5 V 414" />
+    <path class="guide" d="M 322.32 135.18 V 183.68" />
+    <path class="guide" d="M 422.5 35 V 83.5" />
+    <path class="guide" d="M 224.68 35 V 83.5" />
+
+    <path
+        class="box"
+        d="M 124.5 183.68 L 224.68 83.5 H 422.5 V 265.32 L 322.32 365.5 H 124.5 Z"
+    />
+    <path
+        class="box"
+        d="M 124.5 183.68 H 322.32 L 422.5 83.5"
+    />
+    <path
+        class="box"
+        d="M 322.32 183.68 V 365.5"
+    />
+</svg>

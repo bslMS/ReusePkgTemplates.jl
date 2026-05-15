@@ -1,0 +1,26 @@
+using ReusePkgTemplates
+using Documenter
+
+DocMeta.setdocmeta!(
+    ReusePkgTemplates,
+    :DocTestSetup,
+    :(using ReusePkgTemplates);
+    recursive = true
+)
+
+makedocs(;
+    modules = [ReusePkgTemplates],
+    authors = "Guido Wolf Reichert <gwr@bsl-support.de> and contributors",
+    sitename = "ReusePkgTemplates.jl",
+    format = Documenter.HTML(;
+        canonical = "https://bsl-support.de/julia/ReusePkgTemplates.jl",
+        edit_link = "main",
+        assets = String[],
+        footer = "Copyright © 2026 Guido Wolf Reichert and contributors ⋅ Documentation " *
+        "licensed under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) " *
+        "⋅ Built with [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl)."
+    ),
+    pages = [
+        "Home" => "index.md",
+    ]
+)
