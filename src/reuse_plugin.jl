@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: EUPL-1.2+
 
 PkgTemplates.@plugin struct Reuse <: PkgTemplates.Plugin
-    license::Union{AbstractString, Nothing} = nothing
-    artifact_license::Union{AbstractString, Nothing} = nothing
+    code_license::Union{AbstractString, Nothing} = nothing
+    infrastructure_license::Union{AbstractString, Nothing} = nothing
     docs_license::Union{AbstractString, Nothing} = nothing
     docs_assets_license::Union{AbstractString, Nothing} = nothing
     license_ref_dir::Union{AbstractString, Nothing} = nothing
@@ -49,8 +49,8 @@ See https://reuse.software/ for more information about the REUSE specification.
 #TODO: detect CI in posthook and add REUSE lint as its
 
 struct ReuseConfig
-    license::String
-    artifact_license::String
+    code_license::String
+    infrastructure_license::String
     docs_license::String
     docs_assets_license::String
     licenses::Set{String}
@@ -110,14 +110,14 @@ end
 
 # Parse effective license expressions after applying default fallbacks.
 function parsed_reuse_licenses(p::Reuse)
-    license = parse_reuse_license("license", something(p.license, "MIT"))
-    artifact = if p.artifact_license === nothing
-        license
+    code = parse_reuse_license("code", something(p.code_license, "MIT"))
+    infrastructure = if p.infrastructure_license === nothing
+        code
     else
-        parse_reuse_license("artifact", p.artifact_license)
+        parse_reuse_license("infrastructure", p.infrastructure_license)
     end
     docs = if p.docs_license === nothing
-        license
+        code
     else
         parse_reuse_license("docs", p.docs_license)
     end
@@ -127,8 +127,8 @@ function parsed_reuse_licenses(p::Reuse)
         parse_reuse_license("assets", p.docs_assets_license)
     end
     return (
-        license = license,
-        artifact_license = artifact,
+        code_license = code,
+        infrastructure_license = infrastructure,
         docs_license = docs,
         docs_assets_license = assets
     )
@@ -136,18 +136,18 @@ end
 
 # Build `ReuseConfig` struct to provide plugin state from parsed expressions.
 function reuse_config(parsed)
-    license = parsed.license
-    artifact = parsed.artifact_license
+    code = parsed.code_license
+    infrastructure = parsed.infrastructure_license
     docs = parsed.docs_license
     assets = parsed.docs_assets_license
     return ReuseConfig(
-        license.expression,
-        artifact.expression,
+        code.expression,
+        infrastructure.expression,
         docs.expression,
         assets.expression,
-        union(license.licenses, artifact.licenses, docs.licenses, assets.licenses),
-        union(license.exceptions, artifact.exceptions, docs.exceptions, assets.exceptions),
-        union(license.licenserefs, artifact.licenserefs,
+        union(code.licenses, infrastructure.licenses, docs.licenses, assets.licenses),
+        union(code.exceptions, infrastructure.exceptions, docs.exceptions, assets.exceptions),
+        union(code.licenserefs, infrastructure.licenserefs,
             docs.licenserefs, assets.licenserefs)
     )
 end
@@ -185,9 +185,9 @@ function PkgTemplates.validate(p::Reuse, t::PkgTemplates.Template)
     parsed = parsed_reuse_licenses(p)
     config = reuse_config(parsed)
     if p.license_approval != "none"
-        validate_approved_path("license", parsed.license, "code")
+        validate_approved_path("code", parsed.code_license, "code")
         if p.license_approval == "strict"
-            validate_approved_path("artifact", parsed.artifact_license, "strict")
+            validate_approved_path("infrastructure", parsed.infrastructure_license, "strict")
             validate_approved_path("docs", parsed.docs_license, "strict")
             validate_approved_path("assets", parsed.docs_assets_license, "strict")
         end
@@ -222,12 +222,12 @@ function PkgTemplates.view(p::Reuse, t::PkgTemplates.Template, pkg::AbstractStri
         PkgTemplates.destination(readme_plugin)
     end
     return Dict(
-        "ARTIFACT_LICENSE" => config.artifact_license,
         "AUTHORS" => join(t.authors, ", "),
         "DOCS_ASSETS_LICENSE" => config.docs_assets_license,
         "DOCS_LICENSE" => config.docs_license,
+        "INFRASTRUCTURE_LICENSE" => config.infrastructure_license,
         "PKG" => pkg,
-        "PRIMARY_LICENSE" => config.license,
+        "PRIMARY_LICENSE" => config.code_license,
         "README" => readme_destination,
         "YEAR" => year(today())
     )
@@ -378,8 +378,8 @@ end
 
 function PkgTemplates.customizable(::Type{Reuse})
     return (
-        :license => String,
-        :artifact_license => String,
+        :code_license => String,
+        :infrastructure_license => String,
         :docs_license => String,
         :docs_assets_license => String,
         :license_ref_dir => String,

@@ -3,7 +3,7 @@
 
 version = 1
 
-# project artifacts and tooling
+# project infrastructure
 [[annotations]]
 path = [
     ".gitattributes",
@@ -27,19 +27,19 @@ path = [
     "templates/**"
 ]
 precedence = "closest"
-SPDX-FileCopyrightText = "2026 Guido Wolf Reichert <gwr@bsl-support.de>"
-SPDX-License-Identifier = "CC0-1.0"
+SPDX-FileCopyrightText = "2026 Guido Wolf Reichert and contributors"
+SPDX-License-Identifier = "0BSD"
 
 # documentation assets
 [[annotations]]
 path = ["docs/src/assets/**"]
 precedence = "closest"
-SPDX-FileCopyrightText = "2026 Guido Wolf Reichert <gwr@bsl-support.de>"
+SPDX-FileCopyrightText = "2026 Guido Wolf Reichert and contributors"
 SPDX-License-Identifier = "CC-BY-SA-4.0"
 
 # documentation source texts
 [[annotations]]
 path = ["README.md", "docs/*.md", "docs/src/**/*.md"]
 precedence = "closest"
-SPDX-FileCopyrightText = "2026 Guido Wolf Reichert <gwr@bsl-support.de>"
+SPDX-FileCopyrightText = "2026 Guido Wolf Reichert and contributors"
 SPDX-License-Identifier = "CC-BY-SA-4.0"

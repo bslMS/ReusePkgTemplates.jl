@@ -35,7 +35,7 @@ This package is under active development, and public APIs may still change.
 
 ```julia
 using Pkg
-Pkg.add(url = "https://github.com/bslMS/ReusePkgTemplates.jl")
+Pkg.add(url = "ReusePkgTemplates")
 ```
 
 <!-- PkgTemplates: REUSE licensing section start -->
@@ -50,7 +50,7 @@ later (`EUPL-1.2-or-later`).
 The [EUPL v1.2](https://eur-lex.europa.eu/eli/dec_impl/2017/863/oj) was published in the
 Official Journal of the European Union and is available in 23 official EU languages.
 
-Documentation, related assets, project artifacts, and tooling files use separate license
+Documentation, related assets, and project infrastructure files use separate license
 expressions.
 
 This project follows the [REUSE specification](https://reuse.software/spec/) for copyright
