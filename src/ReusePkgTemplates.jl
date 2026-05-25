@@ -3,8 +3,11 @@
 
 module ReusePkgTemplates
 
-using PkgTemplates: PkgTemplates, @plugin, @with_kw_noshow, Plugin
+using Dates: today, year
+using PkgTemplates: PkgTemplates, @plugin, @with_kw_noshow
 using ReuseLicensing: ReuseLicensing
+
+export Reuse
 
 const DEFAULT_TEMPLATE_DIR = Ref{String}(joinpath(dirname(@__DIR__), "templates"))
 
