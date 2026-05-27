@@ -10,6 +10,7 @@ path = [
     ".gitignore",
     ".github/**",
     ".vscode/**",
+    ".licensing/**",
     ".*.yml",
     ".drone.star",
     "CITATION.bib",

@@ -4,15 +4,18 @@
 module ReusePkgTemplates
 
 using Dates: today, year
-using PkgTemplates: PkgTemplates, @plugin, @with_kw_noshow
+using Reexport: @reexport
+@reexport using PkgTemplates
+using PkgTemplates: @plugin, @with_kw_noshow
 using ReuseLicensing: ReuseLicensing
 
-export Reuse
+export Reuse, with_reuse, write_templates
 
 const DEFAULT_TEMPLATE_DIR = Ref{String}(joinpath(dirname(@__DIR__), "templates"))
 
 template_file(paths::AbstractString...) = joinpath(DEFAULT_TEMPLATE_DIR[], paths...)
 
 include("reuse_plugin.jl")
+include("api.jl")
 
 end
