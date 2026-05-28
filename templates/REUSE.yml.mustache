@@ -1,11 +1,18 @@
 name: REUSE
+
 on:
   push:
     branches:
       - main
-    tags: ['*']
+    tags: ["*"]
   pull_request:
+    branches:
+      - main
   workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   reuse:
     name: REUSE compliance

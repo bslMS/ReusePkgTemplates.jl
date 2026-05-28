@@ -4,6 +4,8 @@
 module ReusePkgTemplates
 
 using Dates: today, year
+using TOML: TOML
+
 using Reexport: @reexport
 @reexport using PkgTemplates
 using PkgTemplates: @plugin, @with_kw_noshow

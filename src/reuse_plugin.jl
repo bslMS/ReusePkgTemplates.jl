@@ -20,9 +20,9 @@ const REUSE_TOML_FILE = "REUSE.toml"
 const REUSE_TOML_TEMPLATE = "REUSE.toml.mustache"
 const REUSE_LICENSE_TEMPLATE = "LICENSE.mustache"
 const README_LICENSE_SECTION_TEMPLATE = "README_license_section.md.mustache"
-const REUSE_PROJECT_TOML_TEMPLATE = "Project.toml.metatdata.mustache"
-const REUSE_LINT_WORKFLOW_TEMPLATE = "REUSE.yml"
-const REUSE_LINT_WORKFLOW_FILE = joinpath(".github", "workflows", "reuse.yml")
+const REUSE_PROJECT_TOML_TEMPLATE = "Project.toml.metadata.mustache"
+const REUSE_LINT_WORKFLOW_TEMPLATE = "REUSE.yml.mustache"
+const REUSE_LINT_WORKFLOW_FILE = joinpath(".github", "workflows", "REUSE.yml")
 const SPDX_PARSE_CACHE = Dict{String, ReuseLicensing.ParsedSPDXExpression}()
 const REUSE_README_SECTION_START = "<!-- PkgTemplates: REUSE licensing section start -->"
 const REUSE_README_SECTION_END = "<!-- PkgTemplates: REUSE licensing section end -->"
@@ -422,7 +422,7 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
         block = join([REUSE_README_SECTION_START, section, REUSE_README_SECTION_END], "\n")
         readme_text = read(readme_file, String)
         if !occursin(REUSE_README_SECTION_START, readme_text)
-            PkgTemplates.gen_file(readme_file, readme_text * "\n\n" * block)
+            PkgTemplates.gen_file(readme_file, rstrip(readme_text) * "\n\n" * block * "\n")
         end
     end
 
@@ -440,27 +440,31 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
         add_julia_spdx_header(path, header)
     end
 
-    # Write metatdata to Project.toml.
+    # Write metadata to Project.toml.
     project_file = joinpath(pkg_dir, "Project.toml")
     project = TOML.parsefile(project_file)
     if !haskey(project, "reuse_licensing")
+        text = read(project_file, String)
         section = PkgTemplates.render_file(
             template_path(p, REUSE_PROJECT_TOML_TEMPLATE),
             PkgTemplates.combined_view(p, t, pkg),
             PkgTemplates.tags(p)
         )
 
-        PkgTemplates.gen_file(project_file, text * "\n\n" * section)
+        PkgTemplates.gen_file(
+            project_file,
+            rstrip(text) * "\n\n" * strip(section) * "\n"
+        )
     end
 
     # Establish reuse lint in GitHub Actions.
     if p.enable_reuse_lint &&
        PkgTemplates.getplugin(t, PkgTemplates.GitHubActions) !== nothing
         workflow_template = template_path(p, REUSE_LINT_WORKFLOW_TEMPLATE)
-        workflow_text = PkgTemplates.renderfile(
+        workflow_text = PkgTemplates.render_file(
             workflow_template,
             PkgTemplates.combined_view(p, t, pkg),
-            PkgTempplates.tags(p)
+            PkgTemplates.tags(p)
         )
 
         workflow_file = joinpath(pkg_dir, REUSE_LINT_WORKFLOW_FILE)
@@ -480,7 +484,6 @@ function PkgTemplates.customizable(::Type{Reuse})
         :template_dir => String,
         :enable_reuse_lint => Bool,
         :readme_license_section => Bool,
-        :root_license => Bool,
-        :license_approval => String
+        :license_policy => Symbol
     )
 end
