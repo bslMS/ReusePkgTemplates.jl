@@ -27,8 +27,8 @@ declaration in the root `LICENSE` file.
 
 The package keeps PkgTemplates.jl as the underlying template engine, but replaces
 the conventional license-file workflow with REUSE-oriented project generation.
-Its purpose is to make REUSE-compliant Julia package setup easy, repeatable, and
-consistent across repositories.
+It is meant for package authors who want generated repositories to carry machine-readable
+REUSE/SPDX metadata from the beginning, instead of treating licensing as an afterthought.
 
 This package is under active development, and public APIs may still change.
 
@@ -39,7 +39,7 @@ using Pkg
 Pkg.add("ReusePkgTemplates")
 ```
 
-## Quick Start
+## Usage
 
 ### Generate a REUSE-aware package
 
@@ -123,7 +123,7 @@ reuse spdx
 
 > Note: The recorded Manifest.toml files, where provided under `.licensing/manifests/`,
 > document resolved dependency closures at the time of publication. They support the
-> package-level licensing record for the distribution,but they do not determine every
+> package-level licensing record for the distribution, but they do not determine every
 > possible closure that may arise under other Julia versions, platforms, dependency
 > resolutions, extensions, artifacts, load paths, or user modifications.
 <!-- PkgTemplates: REUSE licensing section end -->
