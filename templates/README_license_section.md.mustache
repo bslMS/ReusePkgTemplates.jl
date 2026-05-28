@@ -3,11 +3,14 @@
 Copyright © {{{YEAR}}} {{{AUTHORS}}}
 
 This package is distributed under the outbound package-level license declaration
-`{{{PACKAGE_LICENSE}}}`. See `LICENSE` for the package-level declaration and license text.
+`{{{PACKAGE_LICENSE}}}`. See `LICENSE` for the package-level declaration and the
+corresponding license texts.
 
-This package-level statement applies to the package as distributed. Individual files,
-including documentation, documentation assets, generated project metadata, and project
-infrastructure files, may use separate license expressions.
+This package-level statement declares the outbound license expected to apply when the
+package code is loaded and used in the ordinary Julia package sense, for example by
+`using {{{PKG}}}` in a Julia session. Documentation, documentation assets, generated
+project metadata, project infrastructure files, and other non-code files may use separate
+license expressions.
 
 This project follows the [REUSE specification](https://reuse.software/spec/) for file-level
 copyright and licensing information. Copyright and license information for individual files
@@ -21,8 +24,8 @@ reuse lint
 reuse spdx
 ```
 
-> Note: Recorded manifests under `.licensing/manifests/`, where provided, document resolved
-> dependency closures at publication time. They support the package-level licensing record,
-> but do not determine every possible closure under other Julia versions, platforms,
-> dependency resolutions, extensions, artifacts, load paths, or user modifications.
-</small>
+> Note: The recorded Manifest.toml files, where provided under `.licensing/manifests/`,
+> document resolved dependency closures at the time of publication. They support the
+> package-level licensing record for the distribution,but they do not determine every
+> possible closure that may arise under other Julia versions, platforms, dependency
+> resolutions, extensions, artifacts, load paths, or user modifications.

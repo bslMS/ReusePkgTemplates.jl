@@ -103,9 +103,11 @@ later (`EUPL-1.2+`). See `LICENSE` for details. The
 [EUPL v1.2](https://eur-lex.europa.eu/eli/dec_impl/2017/863/oj) was published in the
 Official Journal of the European Union and is available in 23 official EU languages.
 
-This package-level statement applies to the package as distributed. Individual files,
-including documentation, documentation assets, generated project metadata, and project
-infrastructure files, may use separate license expressions.
+This package-level statement declares the outbound license expected to apply when the
+package code is loaded and used in the ordinary Julia package sense, for example by
+`using ReusePkgTemplates` in a Julia session. Documentation, documentation assets,
+generated project metadata, project infrastructure files, and other non-code files may use
+separate license expressions.
 
 This project follows the [REUSE specification](https://reuse.software/spec/) for file-level
 copyright and licensing information. Copyright and license information for individual files
@@ -120,8 +122,8 @@ reuse spdx
 ```
 
 > Note: The recorded Manifest.toml files, where provided under `.licensing/manifests/`,
-> document resolved dependency closures at the time of publication. They are evidence for
-> the package-level license statement as distributed, but they do not determine every
+> document resolved dependency closures at the time of publication. They support the
+> package-level licensing record for the distribution,but they do not determine every
 > possible closure that may arise under other Julia versions, platforms, dependency
 > resolutions, extensions, artifacts, load paths, or user modifications.
 <!-- PkgTemplates: REUSE licensing section end -->
