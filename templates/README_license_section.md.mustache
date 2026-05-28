@@ -2,15 +2,17 @@
 
 Copyright © {{{YEAR}}} {{{AUTHORS}}}
 
-This package is distributed under the package-level license expression `{{{PACKAGE_LICENSE}}}`.
-See `LICENSE` for details. This package-level statement applies to the package as distributed,
-but it does not necessarily cover documentation, documentation assets, generated project
-metadata, or other package infrastructure files. Those files may use separate license expressions.
+This package is distributed under the outbound package-level license declaration
+`{{{PACKAGE_LICENSE}}}`. See `LICENSE` for the package-level declaration and license text.
 
-This project follows the [REUSE specification](https://reuse.software/spec/) for copyright
-and licensing information. The corresponding file-level license texts are stored in `LICENSES/`.
-Copyright and license information for individual files is provided via SPDX headers and,
-where applicable, via `REUSE.toml`.
+This package-level statement applies to the package as distributed. Individual files,
+including documentation, documentation assets, generated project metadata, and project
+infrastructure files, may use separate license expressions.
+
+This project follows the [REUSE specification](https://reuse.software/spec/) for file-level
+copyright and licensing information. Copyright and license information for individual files
+is provided via SPDX headers and, where applicable, via `REUSE.toml`. The corresponding
+file-level license texts are stored in `LICENSES/`.
 
 Useful REUSE checks:
 
@@ -19,8 +21,9 @@ reuse lint
 reuse spdx
 ```
 
-The recorded Manifest.toml files, where provided under `.licensing/manifests/`, document
-resolved dependency closures at the time of publication. They are evidence for the package-level
-license statement as distributed, but they do not determine every possible closure that may arise
-under other Julia versions, platforms, dependency resolutions, extensions, artifacts, load paths,
-or user modifications.
+<small>
+Note: Recorded manifests under `.licensing/manifests/`, where provided, document resolved
+dependency closures at publication time. They support the package-level licensing record,
+but do not determine every possible closure under other Julia versions, platforms, dependency
+resolutions, extensions, artifacts, load paths, or user modifications.
+</small>

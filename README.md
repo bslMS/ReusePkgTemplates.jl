@@ -21,8 +21,9 @@
 
 ReusePkgTemplates.jl provides a small convenience layer for creating
 REUSE-compliant Julia package templates on top of PkgTemplates.jl. It is intended
-for projects that want package scaffolds with explicit SPDX copyright and
-licensing metadata instead of relying on a single root `LICENSE` file.
+for projects that want package scaffolds with explicit file-level SPDX copyright
+and licensing metadata, together with an outbound package-level license
+declaration in the root `LICENSE` file.
 
 The package keeps PkgTemplates.jl as the underlying template engine, but replaces
 the conventional license-file workflow with REUSE-oriented project generation.
@@ -35,8 +36,60 @@ This package is under active development, and public APIs may still change.
 
 ```julia
 using Pkg
-Pkg.add(url = "ReusePkgTemplates")
+Pkg.add("ReusePkgTemplates")
 ```
+
+## Quick Start
+
+### Generate a REUSE-aware package
+
+Use `with_reuse` around the PkgTemplates plugins you want to enable. It disables PkgTemplates' conventional `License` plugin and adds REUSE-oriented files and metadata.
+
+```julia
+using ReusePkgTemplates
+
+plugins = with_reuse([
+        Git(; manifest = true, ssh = true),
+        GitHubActions(; x86 = true),
+        Codecov()
+    ];
+    package_license = "EUPL-1.2+",
+    code_license = "MIT",
+    docs_license = "CC-BY-4.0",
+    infrastructure_license = "0BSD",
+    readme_license_section = true
+)
+
+t = Template(;
+    user = "your-github-user",
+    authors = "Your Name <you@example.org>",
+    dir = ".",
+    plugins
+)
+
+t("MyPackage")
+```
+
+This generates a package with REUSE metadata, a package-level `LICENSE`, file-level license texts in `LICENSES/`, REUSE annotations in `REUSE.toml`, `Project.toml` licensing metadata, a README licensing section, and a REUSE lint workflow when `GitHubActions()` is used.
+
+### Bring your own templates
+
+Simply write the standard REUSE templates into a directory, adapt the files to your needs, and point the plugin generator to the template directory:
+
+```julia
+write_templates("reuse_templates")
+
+plugins = with_reuse(;
+    template_dir = "reuse_templates",
+    package_license = "EUPL-1.2+"
+)
+```
+
+You can do this selectively, `with_reuse` will fallback to the standard template whenever a template file is missing in the given directory.
+
+---
+
+For a more detailed overview, please refer to the [documentation](https://bsl-support.de/julia/ReusePkgTemplates.jl/).
 
 <!-- PkgTemplates: REUSE licensing section start -->
 ## Licensing
@@ -45,18 +98,19 @@ Pkg.add(url = "ReusePkgTemplates")
 
 Copyright © 2026 Guido Wolf Reichert and contributors
 
-The source code in this project is licensed under the European Union Public Licence v1.2 or
-later (`EUPL-1.2-or-later`).
-The [EUPL v1.2](https://eur-lex.europa.eu/eli/dec_impl/2017/863/oj) was published in the
+This package is distributed under the European Union Public Licence v1.2 or
+later (`EUPL-1.2+`). See `LICENSE` for details. The
+[EUPL v1.2](https://eur-lex.europa.eu/eli/dec_impl/2017/863/oj) was published in the
 Official Journal of the European Union and is available in 23 official EU languages.
 
-Documentation, related assets, and project infrastructure files use separate license
-expressions.
+This package-level statement applies to the package as distributed. Individual files,
+including documentation, documentation assets, generated project metadata, and project
+infrastructure files, may use separate license expressions.
 
-This project follows the [REUSE specification](https://reuse.software/spec/) for copyright
-and licensing information. The authoritative license texts are stored in `LICENSES/`.
-Copyright and license information for individual files is provided via SPDX headers and,
-where applicable, via `REUSE.toml`.
+This project follows the [REUSE specification](https://reuse.software/spec/) for file-level
+copyright and licensing information. Copyright and license information for individual files
+is provided via SPDX headers and, where applicable, via `REUSE.toml`. The corresponding
+file-level license texts are stored in `LICENSES/`.
 
 Useful REUSE checks:
 
@@ -65,4 +119,10 @@ reuse lint
 reuse spdx
 ```
 
+<small>
+Note: The recorded Manifest.toml files, where provided under `.licensing/manifests/`,
+document resolved dependency closures at the time of publication. They are evidence for
+the package-level license statement as distributed, but they do not determine every
+possible closure that may arise under other Julia versions, platforms, dependency resolutions, extensions, artifacts, load paths, or user modifications.
+</small>
 <!-- PkgTemplates: REUSE licensing section end -->

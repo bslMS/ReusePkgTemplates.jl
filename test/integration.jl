@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Guido Wolf Reichert <gwr@bsl-support.de>
 # SPDX-License-Identifier: EUPL-1.2+
 
+# REUSE-IgnoreStart
 using TestItems
 
 @testsnippet WithTempdir begin
@@ -186,3 +187,4 @@ end
     plugins = with_reuse(; template_dir = "")
     @test_throws ArgumentError Template(; plugins)
 end
+# REUSE-IgnoreEnd
