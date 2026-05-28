@@ -119,10 +119,9 @@ reuse lint
 reuse spdx
 ```
 
-<small>
-Note: The recorded Manifest.toml files, where provided under `.licensing/manifests/`,
-document resolved dependency closures at the time of publication. They are evidence for
-the package-level license statement as distributed, but they do not determine every
-possible closure that may arise under other Julia versions, platforms, dependency resolutions, extensions, artifacts, load paths, or user modifications.
-</small>
+> Note: The recorded Manifest.toml files, where provided under `.licensing/manifests/`,
+> document resolved dependency closures at the time of publication. They are evidence for
+> the package-level license statement as distributed, but they do not determine every
+> possible closure that may arise under other Julia versions, platforms, dependency
+> resolutions, extensions, artifacts, load paths, or user modifications.
 <!-- PkgTemplates: REUSE licensing section end -->
