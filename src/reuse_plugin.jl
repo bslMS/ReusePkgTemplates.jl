@@ -1,6 +1,34 @@
 # SPDX-FileCopyrightText: 2026 Guido Wolf Reichert <gwr@bsl-support.de>
 # SPDX-License-Identifier: EUPL-1.2+
 
+"""
+    Reuse(; kwargs...)
+
+PkgTemplates plugin that generates REUSE-oriented licensing metadata.
+
+`Reuse` writes `REUSE.toml`, vendors file-level license texts into `LICENSES/`,
+writes the outbound package-level `LICENSE` declaration, appends optional README
+licensing text, adds SPDX headers to generated Julia source/test files, and can
+add a REUSE lint GitHub Actions workflow.
+
+Most users should configure REUSE support with [`with_reuse`](@ref), which also
+disables PkgTemplates' conventional `License` plugin.
+
+# Keyword Arguments
+
+The keyword arguments are the same as for [`with_reuse`](@ref):
+
+- `package_license`
+- `code_license`
+- `infrastructure_license`
+- `docs_license`
+- `docs_assets_license`
+- `license_ref_dir`
+- `template_dir`
+- `enable_reuse_lint`
+- `readme_license_section`
+- `license_policy`
+"""
 PkgTemplates.@plugin struct Reuse <: PkgTemplates.Plugin
     package_license::Union{AbstractString, Nothing} = nothing
     code_license::Union{AbstractString, Nothing} = nothing

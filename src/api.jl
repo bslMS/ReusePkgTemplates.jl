@@ -2,35 +2,72 @@
 # SPDX-License-Identifier: EUPL-1.2+
 
 """
-    with_reuse([plugins]; kwargs...)
+    with_reuse([plugins]; kwargs...) -> Vector{<:Plugins}
 
-Return a PkgTemplates plugin list with REUSE support enabled.
+Return a PkgTemplates plugin specification vector with REUSE support enabled. The returned
+vector is intended to be passed directly as the `plugins` keyword to `PkgTemplates.Template`.
 
-`with_reuse` is a convenience wrapper for use with `PkgTemplates.Template`.
-It takes an optional collection of existing plugins, removes any explicit
-`PkgTemplates.License` plugin, disables the default `PkgTemplates.License`
-plugin, and appends a `Reuse` plugin configured from the supplied keyword
-arguments.
+`with_reuse` wraps an optional collection of PkgTemplates plugins, removes any
+explicit `PkgTemplates.License` plugin, disables the default `PkgTemplates.License`
+plugin, and appends a configured [`Reuse`](@ref) plugin. Passing an existing `Reuse`
+plugin in `plugins` is rejected; configure `Reuse` through the keyword arguments to
+`with_reuse` instead.
 
-Use this helper when constructing templates that should use REUSE metadata
-instead of the conventional single-license-file workflow.
+Use this helper when constructing templates that should use an outbound
+package-level license declaration together with REUSE file-level licensing metadata.
+
+# Keyword Arguments
+
+- `package_license::Union{AbstractString, Nothing}`: Outbound SPDX license expression
+  for the package-level software work. Defaults to `"MIT"`.
+- `code_license::Union{AbstractString, Nothing}`: SPDX license expression for the
+  project's source code. Defaults to `package_license`.
+- `infrastructure_license::Union{AbstractString, Nothing}`: SPDX license expression for
+  project metadata and infrastructure files. Defaults to `code_license`.
+- `docs_license::Union{AbstractString, Nothing}`: SPDX license expression for
+  documentation text. Defaults to `code_license`.
+- `docs_assets_license::Union{AbstractString, Nothing}`: SPDX license expression for
+  documentation assets. Defaults to `docs_license`.
+- `license_ref_dir::Union{AbstractString, Nothing}`: Optional directory containing
+  user-supplied license texts for `LicenseRef-...` identifiers. For `LicenseRef-X`,
+  `LicenseRef-X.txt.mustache` is rendered if present; otherwise `LicenseRef-X.txt`
+  is used verbatim.
+- `template_dir::Union{AbstractString, Nothing}`: Optional directory containing template
+  overrides. Missing files fall back to the bundled templates.
+- `enable_reuse_lint::Bool`: Whether to add a REUSE lint GitHub Actions workflow when
+  `GitHubActions` is present. Defaults to `true`.
+- `readme_license_section::Bool`: Whether to append a licensing section to the generated
+  README. Defaults to `false`.
+- `license_policy::Symbol`: Approval policy for SPDX license expressions. Must be one of
+  `:general_registry`, `:osi_approved`, `:free`, or `:none`. Defaults to
+  `:general_registry`.
 
 # Examples
 
 ```julia
-t = Template(;
-    plugins = with_reuse([
-        Git(),
-        SrcDir(),
-        Tests(),
+plugins = with_reuse(
+    [
+        Git(; manifest = true, ssh = true),
+        GitHubActions(; x86 = true),
+        Codecov()
     ];
-        package_license = "EUPL-1.2+",
-        infrastructure_license = "0BSD",
-        docs_license = "CC-BY-SA-4.0",
-    ),
+    package_license = "EUPL-1.2+",
+    docs_license = "CC-BY-SA-4.0",
+    infrastructure_license = "0BSD",
+    readme_license_section = true
 )
+
+t = Template(; plugins)
 ```
 
+# Notes
+
+- Deprecated GNU-style SPDX identifiers such as `GPL-3.0+` are accepted as a convenience
+  and normalized by ReuseLicensing.jl.
+- The `:general_registry` policy is a best-effort helper for generating packages that are
+  likely to satisfy Julia General Registry license expectations. It is not a guarantee of
+  registry acceptance and does not assess legal compatibility between the package-level
+  declaration and file-level licenses.
 """
 function with_reuse(
         plugins = PkgTemplates.Plugin[];
