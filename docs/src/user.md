@@ -1,3 +1,7 @@
+```@meta
+CurrentModule = ReusePkgTemplates
+```
+
 # [SPDX License Expressions](https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/)
 
 - Use SPDX license identifiers and expressions such as `MIT`, `Apache-2.0`,
