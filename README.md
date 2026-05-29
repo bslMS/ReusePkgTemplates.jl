@@ -98,21 +98,21 @@ For a more detailed overview, please refer to the [documentation](https://bsl-su
 
 Copyright © 2026 Guido Wolf Reichert and contributors
 
-This package is distributed under the European Union Public Licence v1.2 or
-later (`EUPL-1.2+`). See `LICENSE` for details. The
+This package is made available as a package-level software work under the European Union
+Public Licence v1.2 or later (`EUPL-1.2+`). See [`LICENSE`](LICENSE) for details. The
 [EUPL v1.2](https://eur-lex.europa.eu/eli/dec_impl/2017/863/oj) was published in the
 Official Journal of the European Union and is available in 23 official EU languages.
 
-This package-level statement declares the outbound license expected to apply when the
-package code is loaded and used in the ordinary Julia package sense, for example by
-`using ReusePkgTemplates` in a Julia session. Documentation, documentation assets,
-generated project metadata, project infrastructure files, and other non-code files may use
-separate license expressions.
+This package-level statement declares the outbound licensing basis for the
+package as a package-level software work. It does not replace, weaken, or
+override file-level SPDX notices. Documentation, documentation assets, generated
+project metadata, project infrastructure files, examples, and other non-code
+files may use separate file-level license expressions.
 
 This project follows the [REUSE specification](https://reuse.software/spec/) for file-level
 copyright and licensing information. Copyright and license information for individual files
-is provided via SPDX headers and, where applicable, via `REUSE.toml`. The corresponding
-file-level license texts are stored in `LICENSES/`.
+is provided via SPDX headers and, where applicable, via [`REUSE.toml`](REUSE.toml). The
+corresponding file-level license texts are stored in [`LICENSES/`](LICENSES/).
 
 Useful REUSE checks:
 
