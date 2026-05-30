@@ -4,76 +4,61 @@ CurrentModule = ReusePkgTemplates
 
 # ReusePkgTemplates.jl
 
-`ReusePkgTemplates.jl` provides a small convenience layer for creating
-REUSE-compliant Julia package templates on top of
-[PkgTemplates.jl](https://juliaci.github.io/PkgTemplates.jl/stable/).
+`ReusePkgTemplates.jl` helps generate Julia package repositories that start with
+explicit REUSE/SPDX licensing metadata instead of retrofitting it later.
 
-It is intended for Julia projects that want package scaffolds with explicit SPDX
-copyright and licensing metadata instead of relying on a single root `LICENSE`
-file. The package keeps PkgTemplates.jl as the underlying template engine, while
-adding REUSE-oriented defaults and helper functions.
+It builds on [PkgTemplates.jl](https://juliaci.github.io/PkgTemplates.jl/stable/)
+and adds a REUSE-aware setup layer for file-level SPDX metadata, an outbound
+package-level license declaration, generated `LICENSES/` content, `REUSE.toml`
+annotations, `Project.toml` license metadata, and optional REUSE linting in GitHub Actions.
 
-The package is developed by [BSL Management Support](https://bsl-support.de) as
-part of a broader commitment to transparent open source infrastructure, clear
-licensing metadata, responsible software stewardship, and practical software
-independence.
+Use it when you want ordinary Julia package scaffolds, but with licensing policy
+made explicit from the first commit.
 
-## Purpose
+## Why this package exists
 
-PkgTemplates.jl already provides the standard mechanism for generating Julia
-package repositories. `ReusePkgTemplates.jl` does not replace it. Instead, it
-wraps and extends the setup path for projects that want REUSE-compliant
-repository metadata from the beginning.
+Julia package templates traditionally start from a root `LICENSE` file containing
+a single license text. That is simple, but it does not scale well to repositories
+containing source code, documentation, generated files, assets, data, and tooling
+under possibly different licenses.
 
-The intended use is simple: create ordinary PkgTemplates.jl templates, but with a
-REUSE-aware plugin set and project layout policy.
+`ReusePkgTemplates.jl` makes the initial scaffold compatible with the
+[REUSE](https://reuse.software/) convention: files carry machine-readable SPDX
+metadata, file-level license texts are collected under `LICENSES/`, and the
+package-level license declaration is recorded separately in the root `LICENSE`
+file together with the supporting license texts implied by that declaration.
 
-## Scope
+## What it provides
 
-`ReusePkgTemplates.jl` is intended to support:
+- a REUSE-aware plugin for PkgTemplates.jl,
+- a `with_reuse` convenience wrapper for composing ordinary PkgTemplates plugins,
+- template customization support through `write_templates` and `template_dir`,
+- defaults for `REUSE.toml`, `LICENSES/`, `LICENSE`, and `Project.toml` licensing
+  fields,
+- optional GitHub Actions integration for REUSE linting.
 
-- creating Julia package templates with REUSE-compliant licensing metadata,
-- replacing the conventional single-license-file workflow with REUSE-oriented
-  project generation,
-- composing PkgTemplates.jl plugins with REUSE-specific plugins and defaults,
-- generating package scaffolds that distinguish source code, documentation,
-  assets, tests, and tooling files where appropriate,
-- supporting consistent project setup across related Julia repositories.
+## What it does not do
 
-The package is general Julia infrastructure. It is not specific to BSL Management
-Support's modeling and simulation work.
+`ReusePkgTemplates.jl` is not a legal compatibility checker, a standalone SPDX
+parser, or a repository license auditor. Those concerns belong in
+[ReuseLicensing.jl](https://bsl-support.de/julia/ReuseLicensing.jl/) and in
+ordinary legal review.
 
-## Non-goals
+The package records licensing intent and generates reviewable metadata. It does
+not prove that a package-level license declaration is compatible with every file,
+dependency, or distribution context.
 
-`ReusePkgTemplates.jl` is not a replacement for PkgTemplates.jl, and it is not a
-standalone SPDX parser or repository license auditor. Expression parsing,
-approval checks, and repository-level license analysis belong in
-[ReuseLicensing.jl](https://bsl-support.de/julia/ReuseLicensing.jl/) and related
-REUSE tooling.
+## Suggested reading path
+
+Start with the User Guide to create a first template. Use the Licensing FAQ for
+conceptual questions about package-level declarations, file-level SPDX metadata,
+and REUSE layout. Use the API Reference once you need precise constructor and
+keyword details.
 
 ## Status
 
 The package is in active development. The initial API is intentionally small, but
 may still change while practical template-generation workflows are refined.
-
-## Installation
-
-```julia
-using Pkg
-Pkg.add(url = "https://github.com/bslMS/ReusePkgTemplates.jl")
-```
-
-The source code and issue tracker are available in the
-[GitHub repository](https://github.com/bslMS/ReusePkgTemplates.jl).
-
-## Related projects
-
-- [PkgTemplates.jl](https://juliaci.github.io/PkgTemplates.jl/stable/) provides
-  the underlying Julia package template engine.
-- [ReuseLicensing.jl](https://bsl-support.de/julia/ReuseLicensing.jl/) provides
-  supporting infrastructure for REUSE- and SPDX-based licensing workflows.
-- [REUSE](https://reuse.software/) defines the licensing metadata convention this
-  package is designed to support.
 
 ## Index
 

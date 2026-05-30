@@ -3,104 +3,53 @@ SPDX-FileCopyrightText: 2026 Guido Wolf Reichert <gwr@bsl-support.de>
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 550 472"
-    role="img"
-    aria-labelledby="title desc"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 450 417"
+  role="img"
+  aria-labelledby="title desc"
 >
-    <title id="title">ReusePkgTemplates.jl logo</title>
-    <desc id="desc">
-        A blueprint-style package box surrounded by four clear reuse arrows in Julia-inspired colors.
-    </desc>
 
-    <defs>
-        <style>
-            .guide {
-                fill: none;
-                stroke: #f0f0f0;
-                stroke-width: 2;
-                stroke-linecap: square;
-                stroke-linejoin: miter;
-            }
+  <title id="title">ReusePkgTemplates logo</title>
+  <desc id="desc">
+    A wireframe package box surrounded by four colored reuse arrows.
+  </desc>
 
-            .box {
-                fill: none;
-                stroke: #666666;
-                stroke-width: 7.25;
-                stroke-linecap: square;
-                stroke-linejoin: miter;
-            }
-
-            .arrow {
-                stroke-width: 6.875;
-                stroke-linecap: square;
-                stroke-linejoin: miter;
-                stroke-miterlimit: 8;
-            }
-
-            .green {
-                fill: #4ea72e;
-                stroke: #4ea72e;
-            }
-
-            .purple {
-                fill: #a02b93;
-                stroke: #a02b93;
-            }
-
-            .blue {
-                fill: #00b0f0;
-                stroke: #00b0f0;
-            }
-
-            .orange {
-                fill: #e97132;
-                stroke: #e97132;
-            }
-        </style>
-    </defs>
-
+  <g transform="translate(-1310 -889)">
     <path
-        class="arrow green"
-        d="M 108.5 104.5 V 63.375 C 108.5 40.662 126.912 22.25 149.625 22.25 H 182 V 10.5 L 205.5 34 L 182 57.5 V 45.75 H 149.625 C 139.891 45.75 132 53.641 132 63.375 V 104.5 Z"
-    />
-    <path
-        class="arrow purple"
-        d="M 443.5 37.5 H 484.625 C 507.338 37.5 525.75 55.912 525.75 78.625 V 111 H 537.5 L 514 134.5 L 490.5 111 H 502.25 V 78.625 C 502.25 68.891 494.359 61 484.625 61 H 443.5 Z"
-    />
-    <path
-        class="arrow blue"
-        d="M 416.5 366.5 V 407.625 C 416.5 430.338 398.088 448.75 375.375 448.75 H 344 V 460.5 L 320.5 437 L 344 413.5 V 425.25 H 375.375 C 385.109 425.25 393 417.359 393 407.625 V 366.5 Z"
-    />
-    <path
-        class="arrow orange"
-        d="M 103.5 437.5 H 62.375 C 39.662 437.5 21.25 419.088 21.25 396.375 V 365 H 9.5 L 33 341.5 L 56.5 365 H 44.75 V 396.375 C 44.75 406.109 52.641 414 62.375 414 H 103.5 Z"
+      d="M1334.5 993.5V952.375c0-22.713 18.41-41.125 41.12-41.125H1408V899.5l23.5 23.5-23.5 23.5v-11.75h-32.38c-9.73 0-17.62 7.891-17.62 17.625V993.5Z"
+      fill="#4EA72E"
+      stroke="#4EA72E"
+      stroke-width="6.875"
     />
 
-    <path class="guide" d="M 76 183.68 H 124.5" />
-    <path class="guide" d="M 76 365.5 H 124.5" />
-    <path class="guide" d="M 322.32 365.5 H 370.82" />
-    <path class="guide" d="M 422.5 265.32 H 471" />
-    <path class="guide" d="M 422.5 83.5 H 471" />
-    <path class="guide" d="M 224.68 83.5 H 273.18" />
-
-    <path class="guide" d="M 124.5 135.18 V 183.68" />
-    <path class="guide" d="M 124.5 365.5 V 414" />
-    <path class="guide" d="M 322.32 365.5 V 414" />
-    <path class="guide" d="M 322.32 135.18 V 183.68" />
-    <path class="guide" d="M 422.5 35 V 83.5" />
-    <path class="guide" d="M 224.68 35 V 83.5" />
+    <path
+      d="M1656.5 912.5h40.69c22.47 0 40.69 18.216 40.69 40.687v32.063h11.62l-23.25 23.25-23.25-23.25h11.63v-32.063c0-9.63-7.81-17.437-17.44-17.437h-40.69Z"
+      fill="#A02B93"
+      stroke="#A02B93"
+      stroke-width="6.875"
+    />
 
     <path
-        class="box"
-        d="M 124.5 183.68 L 224.68 83.5 H 422.5 V 265.32 L 322.32 365.5 H 124.5 Z"
+      d="M1736.5 1201.5v40.69c0 22.47-18.22 40.69-40.69 40.69h-32.06v11.62l-23.25-23.25 23.25-23.25v11.62h32.06c9.63 0 17.44-7.8 17.44-17.43v-40.69Z"
+      fill="#00B0F0"
+      stroke="#00B0F0"
+      stroke-width="6.875"
     />
+
     <path
-        class="box"
-        d="M 124.5 183.68 H 322.32 L 422.5 83.5"
+      d="M1414.5 1288.5h-40.69c-22.47 0-40.69-18.22-40.69-40.69v-32.06h-11.62l23.25-23.25 23.25 23.25h-11.63v32.06c0 9.63 7.81 17.44 17.44 17.44h40.69Z"
+      fill="#E97132"
+      stroke="#E97132"
+      stroke-width="6.875"
     />
+
     <path
-        class="box"
-        d="M 322.32 183.68 V 365.5"
+      d="M1384.5 1021.14 1447.14 958.5H1682.5v219.36l-62.64 62.64H1384.5ZM1384.5 1021.14h235.36l62.64-62.64M1619.86 1021.14v219.36"
+      fill="none"
+      stroke="#7F7F7F"
+      stroke-width="6.875"
+      stroke-linejoin="miter"
+      stroke-miterlimit="8"
     />
+  </g>
 </svg>

@@ -1,5 +1,5 @@
 # REUSE.toml
-# Part of ReusePkgTemplates
+# Part of {{{PKG}}}
 
 version = 1
 
@@ -11,10 +11,10 @@ path = [
     ".github/**",
     ".vscode/**",
     ".licensing/**",
-    ".*.yml",
     ".drone.star",
     ".JuliaFormatter.toml",
     ".codecov.yml",
+    ".*.yml",
     "CITATION.bib",
     "CODEOWNERS",
     "Project.toml",
@@ -24,24 +24,27 @@ path = [
     "docs/Manifest.toml",
     "test/Project.toml",
     "test/Manifest.toml",
-    "scripts/Project.toml",
-    "scripts/Manifest.toml",
-    "templates/**"
 ]
 precedence = "closest"
-SPDX-FileCopyrightText = "2026 Guido Wolf Reichert and contributors"
-SPDX-License-Identifier = "0BSD"
+SPDX-FileCopyrightText = "{{{YEAR}}} {{{AUTHORS}}}"
+SPDX-License-Identifier = "{{{INFRASTRUCTURE_LICENSE}}}"
 
 # documentation assets
 [[annotations]]
-path = ["docs/src/assets/**"]
+path = [
+    "docs/src/assets/**",
+]
 precedence = "closest"
-SPDX-FileCopyrightText = "2026 Guido Wolf Reichert and contributors"
-SPDX-License-Identifier = "CC-BY-SA-4.0"
+SPDX-FileCopyrightText = "{{{YEAR}}} {{{AUTHORS}}}"
+SPDX-License-Identifier = "{{{DOCS_ASSETS_LICENSE}}}"
 
 # documentation source texts
 [[annotations]]
-path = ["README.md", "docs/*.md", "docs/src/**/*.md"]
+path = [
+    "{{{README}}}",
+    "docs/*.md",
+    "docs/src/**/*.md",
+]
 precedence = "closest"
-SPDX-FileCopyrightText = "2026 Guido Wolf Reichert and contributors"
-SPDX-License-Identifier = "CC-BY-SA-4.0"
+SPDX-FileCopyrightText = "{{{YEAR}}} {{{AUTHORS}}}"
+SPDX-License-Identifier = "{{{DOCS_LICENSE}}}"
