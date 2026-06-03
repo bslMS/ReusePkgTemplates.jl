@@ -18,6 +18,8 @@ TOML = "1"
 julia = "1.10"
 
 [reuse_licensing]
-file_license_scheme = "REUSE"
-package_license = "EUPL-1.2+"
+reuse_specification_version = "3.3"
+spdx_license_list_version = "3.28.0"
+package_license_expression = "EUPL-1.2+"
+package_copyright_notice = "Copyright © 2026 Guido Wolf Reichert and contributors"
 package_license_file = "LICENSE"
