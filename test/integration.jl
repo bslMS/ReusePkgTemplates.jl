@@ -59,9 +59,8 @@ end
         read(joinpath(licenses, "CC-BY-SA-4.0.txt"), String)
     )
     @test occursin("[reuse_licensing]", read(project, String))
-    @test occursin("package_license", read(project, String))
+    @test occursin("package_license_expression", read(project, String))
     @test occursin("EUPL-1.2+", read(project, String))
-    @test occursin("EUPL-1.2+", read(readme, String))
     @test occursin(
         "SPDX-FileCopyrightText = \"$current_year Test Author <test@example.org>\"",
         read(reuse_toml, String)
@@ -114,9 +113,7 @@ end
     write_templates(dir)
 
     @test isfile(joinpath(dir, "REUSE.toml.mustache"))
-    @test isfile(joinpath(dir, "Project.toml.metadata.mustache"))
     @test isfile(joinpath(dir, "README_license_section.md.mustache"))
-    @test isfile(joinpath(dir, "LICENSE.mustache"))
     @test isfile(joinpath(dir, "REUSE.yml.mustache"))
     @test !isfile(joinpath(dir, ".DS_Store"))
 end
@@ -131,11 +128,13 @@ end
 
 @testitem "fallback to templates if only one template is given" setup=[WithTempdir] begin
     dir = mktempdir()
-    write(joinpath(dir, "LICENSE.mustache"), "This is a custom file.\n")
+    write(joinpath(dir, "README_license_section.md.mustache"),
+        "Custom licensing section.\n")
 
     plugins = with_reuse(;
         package_license = "EUPL-1.2+",
-        template_dir = dir
+        template_dir = dir,
+        readme_license_section = true
     )
 
     t = Template(;
@@ -147,11 +146,9 @@ end
     t("TestPackage")
     pkg = joinpath(tmp, "TestPackage")
 
-    @test occursin("This is a custom file.", read(license, String))
-    @test !occursin("Copyright", read(license, String))
-    @test occursin("European Union Member State", read(license, String))
-    @test occursin("Appendix", read(license, String))
-    @test occursin("[reuse_licensing]", read(project, String))
+    @test occursin("Custom licensing section.", read(readme, String))
+    # fallback still used for REUSE.toml.mustache
+    @test occursin("version = 1", read(reuse_toml, String))
 end
 
 @testitem "plugin composition rejects Reuse and removes License plugins" begin
@@ -187,4 +184,44 @@ end
     plugins = with_reuse(; template_dir = "")
     @test_throws ArgumentError Template(; plugins)
 end
+
+@testitem "package-level copyright_holders differ from authors" setup=[WithTempdir] begin
+    plugins = with_reuse(;
+        copyright_holders = ["Aron", "Berta", "Charlie"]
+    )
+
+    t = Template(;
+        user = "test-user",
+        authors = "Test Author <test@example.org>",
+        dir = tmp,
+        plugins
+    )
+    t("TestPackage")
+    pkg = joinpath(tmp, "TestPackage")
+
+    copyright_notice = "Copyright © $current_year Aron, Berta, and Charlie"
+    @test occursin(copyright_notice, read(license, String))
+    @test occursin(
+        "SPDX-FileCopyrightText: $current_year Test Author <test@example.org>",
+        read(sourcefile, String)
+    )
+    @test occursin(copyright_notice, read(project, String))
+    @test !occursin(copyright_notice, read(reuse_toml, String))
+end
+
+@testitem "copyright_holders must not be empty" setup=[WithTempdir] begin
+    plugins = with_reuse(; copyright_holders = String[])
+    @test_throws ArgumentError Template(; plugins)
+end
+
+@testitem "copyright_holders must not be blank holder" setup=[WithTempdir] begin
+    plugins = with_reuse(; copyright_holders = String[" "])
+    @test_throws ArgumentError Template(; plugins)
+end
+
+@testitem "copyright_holders must not contain blank amid valid holders" setup=[WithTempdir] begin
+    plugins = with_reuse(; copyright_holders = String[" ", "Anton"])
+    @test_throws ArgumentError Template(; plugins)
+end
+
 # REUSE-IgnoreEnd

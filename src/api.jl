@@ -18,6 +18,9 @@ package-level license declaration together with REUSE file-level licensing metad
 
 # Keyword Arguments
 
+- `copyright_holders::Union{Vector{<:AbstractString}, Nothing}`: Copyright holders used
+  to construct the package-level copyright notice with the current year. Defaults to the
+  template `authors`.
 - `package_license::Union{AbstractString, Nothing}`: Outbound SPDX license expression
   for the package-level software work. Defaults to `"MIT"`.
 - `code_license::Union{AbstractString, Nothing}`: SPDX license expression for the
@@ -71,6 +74,7 @@ t = Template(; plugins)
 """
 function with_reuse(
         plugins = PkgTemplates.Plugin[];
+        copyright_holders::Union{Vector{<:AbstractString}, Nothing} = nothing,
         package_license::Union{AbstractString, Nothing} = nothing,
         code_license::Union{AbstractString, Nothing} = nothing,
         infrastructure_license::Union{AbstractString, Nothing} = nothing,
@@ -89,6 +93,7 @@ function with_reuse(
     filtered = Any[p for p in plugins if !(p isa PkgTemplates.License)]
 
     reuse = Reuse(;
+        copyright_holders,
         package_license,
         code_license,
         infrastructure_license,

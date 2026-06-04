@@ -11,6 +11,7 @@ ReuseLicensing = "de4d323f-34a2-45c1-b1df-90653b04f4ca"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [compat]
+Dates = "1"
 PkgTemplates = "0.7"
 Reexport = "1.2"
 ReuseLicensing = "0.2"

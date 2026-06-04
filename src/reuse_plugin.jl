@@ -18,6 +18,7 @@ disables PkgTemplates' conventional `License` plugin.
 
 The keyword arguments are the same as for [`with_reuse`](@ref):
 
+- `copyright_holders`
 - `package_license`
 - `code_license`
 - `infrastructure_license`
@@ -30,6 +31,7 @@ The keyword arguments are the same as for [`with_reuse`](@ref):
 - `license_policy`
 """
 PkgTemplates.@plugin struct Reuse <: PkgTemplates.Plugin
+    copyright_holders::Union{Vector{<:AbstractString}, Nothing} = nothing
     package_license::Union{AbstractString, Nothing} = nothing
     code_license::Union{AbstractString, Nothing} = nothing
     infrastructure_license::Union{AbstractString, Nothing} = nothing
@@ -45,15 +47,11 @@ end
 const PACKAGE_LICENSE_DECLARED_FILE = "LICENSE"
 const REUSE_LICENSES_DIR = "LICENSES"
 const REUSE_TOML_FILE = "REUSE.toml"
-const REUSE_TOML_TEMPLATE = "REUSE.toml.mustache"
-const REUSE_LICENSE_TEMPLATE = "LICENSE.mustache"
-const README_LICENSE_SECTION_TEMPLATE = "README_license_section.md.mustache"
-const REUSE_PROJECT_TOML_TEMPLATE = "Project.toml.metadata.mustache"
-const REUSE_LINT_WORKFLOW_TEMPLATE = "REUSE.yml.mustache"
 const REUSE_LINT_WORKFLOW_FILE = joinpath(".github", "workflows", "REUSE.yml")
-const SPDX_PARSE_CACHE = Dict{String, ReuseLicensing.ParsedSPDXExpression}()
-const REUSE_README_SECTION_START = "<!-- PkgTemplates: REUSE licensing section start -->"
-const REUSE_README_SECTION_END = "<!-- PkgTemplates: REUSE licensing section end -->"
+
+const REUSE_TOML_TEMPLATE = "REUSE.toml.mustache"
+const README_LICENSE_SECTION_TEMPLATE = "README_license_section.md.mustache"
+const REUSE_LINT_WORKFLOW_TEMPLATE = "REUSE.yml.mustache"
 # REUSE-IgnoreStart
 const REUSE_JULIA_HEADER_TEMPLATE = """
                                     # SPDX-FileCopyrightText: {{{YEAR}}} {{{AUTHORS}}}
@@ -62,9 +60,11 @@ const REUSE_JULIA_HEADER_TEMPLATE = """
                                     """
 const REUSE_SPDX_LICENSE_TAG = "SPDX-License-Identifier:"
 # REUSE-IgnoreEnd
-const REUSE_HEADER_SCAN_LINES = 5
 
-#TODO add REUSE badge if badges are present
+const REUSE_README_SECTION_START = "<!-- PkgTemplates: REUSE licensing section start -->"
+const REUSE_README_SECTION_END = "<!-- PkgTemplates: REUSE licensing section end -->"
+const REUSE_HEADER_SCAN_LINES = 5
+const SPDX_PARSE_CACHE = Dict{String, ReuseLicensing.ParsedSPDXExpression}()
 
 struct ReuseConfig
     package_license::String
@@ -81,6 +81,9 @@ struct ReuseConfig
     package_exceptions::Set{String}
     package_licenserefs::Set{String} # lowercase identifiers
 end
+
+# Normalize line endings.
+normalize_line_endings(text::AbstractString) = ReuseLicensing.normalize_line_endings(text)
 
 # Resolve template file path.
 function template_path(p::Reuse, filename::AbstractString)
@@ -235,6 +238,14 @@ end
 
 # Validate REUSE configuration before generation starts.
 function PkgTemplates.validate(p::Reuse, t::PkgTemplates.Template)
+    if p.copyright_holders !== nothing
+        try
+            ReuseLicensing.copyright_notice(string(year(today())), p.copyright_holders)
+        catch err
+            err isa ArgumentError || rethrow()
+            throw(ArgumentError("Reuse: invalid `copyright_holders`: $(err.msg)"))
+        end
+    end
     p.license_policy in (:general_registry, :free, :osi_approved, :none) ||
         throw(ArgumentError(
             "Reuse: license_policy must be `:general_registry`, `:free`, `:osi_approved`, " *
@@ -278,17 +289,29 @@ function PkgTemplates.view(p::Reuse, t::PkgTemplates.Template, pkg::AbstractStri
     else
         PkgTemplates.destination(readme_plugin)
     end
+    authors = t.authors isa AbstractString ? [string(t.authors)] : string.(t.authors)
+    copyright_holders = if p.copyright_holders === nothing
+        authors
+    else
+        string.(p.copyright_holders)
+    end
+    copyright_notice = ReuseLicensing.copyright_notice(
+        string(year(today())), copyright_holders)
     return Dict(
-        "AUTHORS" => join(t.authors, ", "),
+        "PKG" => pkg,
+        "COPYRIGHT_HOLDERS" => ReuseLicensing.join_copyright_holders(copyright_holders),
+        "YEAR" => string(year(today())),
+        "COPYRIGHT_NOTICE" => copyright_notice,
+        "AUTHORS" => ReuseLicensing.join_copyright_holders(authors),
         "PACKAGE_LICENSE" => config.package_license,
-        "PACKAGE_LICENSE_DECLARED_FILE" => PACKAGE_LICENSE_DECLARED_FILE,
         "CODE_LICENSE" => config.code_license,
+        "INFRASTRUCTURE_LICENSE" => config.infrastructure_license,
         "DOCS_LICENSE" => config.docs_license,
         "DOCS_ASSETS_LICENSE" => config.docs_assets_license,
-        "INFRASTRUCTURE_LICENSE" => config.infrastructure_license,
-        "PKG" => pkg,
+        "PACKAGE_LICENSE_DECLARED_FILE" => PACKAGE_LICENSE_DECLARED_FILE,
         "README" => readme_destination,
-        "YEAR" => year(today())
+        "REUSE_SPECIFICATION_VERSION" => ReuseLicensing.reuse_specification_version(),
+        "SPDX_LICENSE_LIST_VERSION" => ReuseLicensing.spdx_license_list_version()
     )
 end
 
@@ -357,7 +380,7 @@ end
 function add_julia_spdx_header(path::AbstractString, header::AbstractString)
     isfile(path) || return
 
-    text = read(path, String)
+    text = normalize_line_endings(read(path, String))
     lines = split(text, '\n')
     any(
         line -> occursin(REUSE_SPDX_LICENSE_TAG, line),
@@ -385,7 +408,7 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
     end
 
     # Write appropriate package license declared file, e.g., `LICENSE`.
-    license_template_path = template_path(p, REUSE_LICENSE_TEMPLATE)
+    license_template_path = ReuseLicensing.license_template_path()
     license_text = PkgTemplates.render_file(
         license_template_path,
         PkgTemplates.combined_view(p, t, pkg),
@@ -398,14 +421,14 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
         src = ReuseLicensing.spdx_license_text_path(id)
         src === nothing &&
             throw(ArgumentError("Reuse: no SPDX license text found for `$id`"))
-        push!(license_parts, read(src, String))
+        push!(license_parts, normalize_line_endings(read(src, String)))
     end
 
     for id in sort(collect(config.package_exceptions))
         src = ReuseLicensing.spdx_license_exception_text_path(id)
         src === nothing &&
             throw(ArgumentError("Reuse: no SPDX license exception text found for `$id`"))
-        push!(license_parts, read(src, String))
+        push!(license_parts, normalize_line_endings(read(src, String)))
     end
 
     # Vendor possibly rendered custom `LicenseRef-...` license texts.
@@ -424,13 +447,13 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
                 src, PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p))
             push!(license_parts, license_text)
         else
-            push!(license_parts, read(src, String))
+            push!(license_parts, normalize_line_endings(read(src, String)))
         end
     end
 
     PkgTemplates.gen_file(
         joinpath(pkg_dir, PACKAGE_LICENSE_DECLARED_FILE),
-        join(strip.(license_parts), "\n\n") * "\n"
+        join(chomp.(license_parts), "\n\n") * "\n"
     )
 
     # Render the `README_license_section` template and append to `README.md` (optional).
@@ -448,9 +471,9 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
             PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p)
         )
         block = join([REUSE_README_SECTION_START, section, REUSE_README_SECTION_END], "\n")
-        readme_text = read(readme_file, String)
+        readme_text = normalize_line_endings(read(readme_file, String))
         if !occursin(REUSE_README_SECTION_START, readme_text)
-            PkgTemplates.gen_file(readme_file, rstrip(readme_text) * "\n\n" * block * "\n")
+            PkgTemplates.gen_file(readme_file, chomp(readme_text) * "\n\n" * block * "\n")
         end
     end
 
@@ -472,16 +495,16 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
     project_file = joinpath(pkg_dir, "Project.toml")
     project = TOML.parsefile(project_file)
     if !haskey(project, "reuse_licensing")
-        text = read(project_file, String)
+        text = normalize_line_endings(read(project_file, String))
         section = PkgTemplates.render_file(
-            template_path(p, REUSE_PROJECT_TOML_TEMPLATE),
+            ReuseLicensing.project_toml_metadata_template_path(),
             PkgTemplates.combined_view(p, t, pkg),
             PkgTemplates.tags(p)
         )
 
         PkgTemplates.gen_file(
             project_file,
-            rstrip(text) * "\n\n" * strip(section) * "\n"
+            chomp(text) * "\n\n" * chomp(section) * "\n"
         )
     end
 
@@ -501,17 +524,5 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
     end
 end
 
-function PkgTemplates.customizable(::Type{Reuse})
-    return (
-        :package_license => String,
-        :code_license => String,
-        :infrastructure_license => String,
-        :docs_license => String,
-        :docs_assets_license => String,
-        :license_ref_dir => String,
-        :template_dir => String,
-        :enable_reuse_lint => Bool,
-        :readme_license_section => Bool,
-        :license_policy => Symbol
-    )
-end
+# Interactive customization of templates is currently not supported.
+PkgTemplates.customizable(::Type{Reuse}) = ()
