@@ -6,7 +6,8 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 # Contributing
 
 ReusePkgTemplates.jl is intended to be a focused helper package for creating
-REUSE-compliant Julia package templates on top of PkgTemplates.jl.
+REUSE-compliant Julia package templates and related project scaffolding on top
+of PkgTemplates.jl.
 
 Contributions are welcome when they fit this scope. Useful contributions include:
 
@@ -17,12 +18,11 @@ Contributions are welcome when they fit this scope. Useful contributions include
 - improvements to compatibility with PkgTemplates.jl
 - improvements to REUSE-compliant project generation
 
-Larger changes, new public APIs, or architectural changes should be discussed in
-an issue before implementation.
+Pull requests are considered selectively. Larger changes, new APIs, or architectural
+changes should be discussed in an issue before implementation.
 
-All contributions must fit the technical scope, licensing policy, and long-term
-direction of the project. Pull requests may be declined if they broaden the scope,
-increase maintenance burden, or complicate licensing without a clear benefit.
+All contributions must fit the technical scope, licensing policy, and long-term direction
+of the project. Pull requests may be accepted at the sole discretion of the maintainer.
 
 ## Developer Certificate of Origin
 
@@ -48,8 +48,9 @@ Contributions without a valid sign-off may be rejected.
 ## Licensing of contributions
 
 By submitting a signed-off contribution, you agree that your contribution may be distributed
-under the licensing terms applicable to the files you modify. Code contributions to files
-licensed under `EUPL-1.2+` must be contributed under `EUPL-1.2+`, unless the file-level
+under the licensing terms applicable to the files you modify. Contributions are accepted
+under the license terms of the files they modify. Code contributions to files licensed
+under `EUPL-1.2+` must be contributed under `EUPL-1.2+`, unless the file-level
 SPDX metadata clearly states a different applicable license.
 
 New Julia source files should normally use:
@@ -60,7 +61,14 @@ New Julia source files should normally use:
 ```
 
 Documentation files are generally licensed under `CC-BY-SA-4.0`, unless stated
-otherwise by file-level SPDX metadata. Project tooling, configuration, and other project infrastructure files may be licensed under `0BSD`, where appropriate.
+otherwise by file-level SPDX metadata. Project tooling, configuration, and other project
+infrastructure files may be licensed under `0BSD`, where appropriate.
+
+Do not edit the root `LICENSE` file or the `[reuse_licensing]` table in
+`Project.toml` by hand unless the change is specifically about package-level
+licensing. Package-level declarations should be changed with
+[ReuseLicensing](https://bsl-support.de/julia/ReuseLicensing.jl/) tooling so that
+`LICENSE` and `Project.toml` remain coherent.
 
 When modifying existing files, follow the existing licensing domain of the file.
 
@@ -71,6 +79,9 @@ files must include appropriate SPDX licensing information, either as file header
 necessary, through `.license` sidecar files or `REUSE.toml`.
 
 Do not add files with unclear or missing copyright or licensing information.
+
+Shipped template files under templates/*.mustache are project infrastructure and
+should remain covered by REUSE.toml
 
 ## Julia collaboration and code style
 

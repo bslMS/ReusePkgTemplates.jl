@@ -96,34 +96,32 @@ For a more detailed overview, please refer to the [documentation](https://bsl-su
 
 <img src="docs/src/assets/Logo_EUPL.svg" alt="EUPL logo" width="84" align="right">
 
-Copyright © 2026 Guido Wolf Reichert and contributors
+ReusePkgTemplates.jl is offered under the outbound package-level license expression
+`EUPL-1.2+`. The authoritative package-level license declaration and copyright notice are
+recorded in [`LICENSE`](LICENSE), together with the corresponding license text.
 
-This package is made available as a package-level software work under the European Union
-Public Licence v1.2 or later (`EUPL-1.2+`). See [`LICENSE`](LICENSE) for details. The
-[EUPL v1.2](https://eur-lex.europa.eu/eli/dec_impl/2017/863/oj) was published in the
-Official Journal of the European Union and is available in 23 official EU languages.
+Machine-readable package-level licensing metadata is recorded in the `[reuse_licensing]`
+table of [`Project.toml`](Project.toml).
 
-This package-level statement declares the outbound licensing basis for the
-package as a package-level software work. It does not replace, weaken, or
-override file-level SPDX notices. Documentation, documentation assets, generated
-project metadata, project infrastructure files, examples, and other non-code
-files may use separate file-level license expressions.
+The [European Union Public Licence v1.2](https://eur-lex.europa.eu/eli/dec_impl/2017/863/oj)
+is available in 23 official EU language versions.
 
-This project follows the [REUSE specification](https://reuse.software/spec/) for file-level
-copyright and licensing information. Copyright and license information for individual files
-is provided via SPDX headers and, where applicable, via [`REUSE.toml`](REUSE.toml). The
-corresponding file-level license texts are stored in [`LICENSES/`](LICENSES/).
+Individual files may carry separate file-level license expressions, as recorded
+by their SPDX notices or by [`REUSE.toml`](REUSE.toml). This project follows the
+[REUSE specification](https://reuse.software/spec/) for file-level copyright and
+licensing information. License texts used for file-level REUSE licensing are
+stored in [`LICENSES/`](LICENSES/).
 
-Useful REUSE checks:
+> Recorded `Manifest.toml` files under `.licensing/manifests/`, where provided,
+> document dependency resolutions considered when choosing the package-level
+> license expression. They are evidence for that decision, not guarantees for
+> other Julia versions, platforms, dependency resolutions, extensions, artifacts,
+> load paths, or local modifications.
+
+To verify repository-level REUSE metadata:
 
 ```bash
 reuse lint
 reuse spdx
 ```
-
-> Note: The recorded Manifest.toml files, where provided under `.licensing/manifests/`,
-> document resolved dependency closures at the time of publication. They support the
-> package-level licensing record for the distribution, but they do not determine every
-> possible closure that may arise under other Julia versions, platforms, dependency
-> resolutions, extensions, artifacts, load paths, or user modifications.
 <!-- PkgTemplates: REUSE licensing section end -->

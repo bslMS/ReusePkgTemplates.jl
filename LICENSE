@@ -1,30 +1,22 @@
 Copyright © 2026 Guido Wolf Reichert and contributors
 
-This package is made available as a package-level software work under the
-following outbound license expression:
+This package is made available under the following package-level outbound license
+expression:
 
     EUPL-1.2+
 
-The corresponding license text or texts for this package-level expression are
-included below. Additional license texts used for file-level REUSE compliance are
-stored in LICENSES/.
+The corresponding license text is included below. Additional license texts used
+for file-level licensing are stored in LICENSES/.
 
 This repository follows the REUSE specification for file-level copyright and
-licensing information. Authoritative file-level licensing information is provided
-by SPDX notices in individual files, by REUSE.toml where applicable, and by the
-corresponding license texts in LICENSES/.
+licensing information. Authoritative file-level copyright and licensing
+information is provided by SPDX notices in individual files, by REUSE.toml where
+applicable, and by the corresponding license texts in LICENSES/.
 
-The package-level license statement does not replace, weaken, or override
-file-level SPDX notices. It does not override separate file-level license
-expressions for documentation, documentation assets, generated project metadata,
-project infrastructure files, or other non-code files. Some files may be
-available under more permissive licenses.
-
-The effective licensing obligations of a concrete Julia environment may depend on
-dependency versions, package extensions, artifacts, generated code, included files,
-sysimages, application bundles, containers, and the active load path. Anyone
-redistributing modified, bundled, instantiated, or otherwise combined versions
-should verify the licensing of the resulting distribution.
+The package-level copyright notice and license statement do not replace, weaken,
+or override file-level SPDX copyright or license notices. Documentation,
+documentation assets, generated project metadata, project infrastructure files,
+or other non-code files may carry separate file-level license expressions.
 
 Additional release-time licensing evidence, where provided, may be stored under
 .licensing/.
