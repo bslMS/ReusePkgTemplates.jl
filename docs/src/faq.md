@@ -2,7 +2,7 @@
 CurrentModule = ReusePkgTemplates
 ```
 
-# Licensing FAQ
+# [Licensing FAQ](@id licensing-faq)
 
 !!! warning "This is not legal advice"
     This FAQ explains the licensing model assumed by `ReusePkgTemplates.jl` and

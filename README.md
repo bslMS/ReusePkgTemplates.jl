@@ -21,7 +21,7 @@
 
 ReusePkgTemplates.jl provides a small convenience layer on top of PkgTemplates.jl
 for generating Julia package scaffolds with REUSE/SPDX licensing metadata. Generated
-packages include explicit file-level copyright and licensing metadata, together with
+packages include file-level copyright and licensing metadata, together with
 an outbound package-level license declaration in the root `LICENSE` file.
 
 The package keeps PkgTemplates.jl as the underlying template engine, but replaces the
@@ -43,18 +43,19 @@ Pkg.add("ReusePkgTemplates")
 
 ### Generate a REUSE-aware package
 
-Use `with_reuse` around the PkgTemplates plugins you want to enable. It disables PkgTemplates' conventional `License` plugin and adds REUSE-oriented files and metadata.
+Use `with_reuse` around the PkgTemplates plugins you want to enable. It disables
+PkgTemplates' conventional `License` plugin and adds REUSE-oriented files and metadata.
 
 ```julia
 using ReusePkgTemplates
 
-plugins = with_reuse([
+plugins = with_reuse(
+    [
         Git(; manifest = true, ssh = true),
         GitHubActions(; x86 = true),
         Codecov()
     ];
     package_license = "EUPL-1.2+",
-    code_license = "MIT",
     docs_license = "CC-BY-4.0",
     infrastructure_license = "0BSD",
     readme_license_section = true
@@ -70,11 +71,30 @@ t = Template(;
 t("MyPackage")
 ```
 
-This generates a package with REUSE metadata, a package-level `LICENSE`, file-level license texts in `LICENSES/`, REUSE annotations in `REUSE.toml`, `Project.toml` licensing metadata, a README licensing section, and a REUSE lint workflow when `GitHubActions()` is used.
+This generates a package with:
+
+- a `LICENSE` file that contains
+    - the package-level copyright notice,
+    - a package license expression,
+    - explanatory text,
+    - the license text or texts referenced by the license expression,
+- file-level license texts in `LICENSES/`,
+- REUSE annotations in `REUSE.toml`,
+- `Project.toml` licensing metadata,
+- a README licensing section,
+- a REUSE lint workflow when `GitHubActions()` is used.
+
+By default, package-level copyright holders are derived from `authors`; pass
+`copyright_holders = [...]` when the package-level holders differ.
+
+`code_license` defaults to `package_license`, but can be set separately when source
+files should carry a different file-level license expression than the outbound
+package-level declaration.
 
 ### Bring your own templates
 
-Simply write the standard REUSE templates into a directory, adapt the files to your needs, and point the plugin generator to the template directory:
+Copy the bundled ReusePkgTemplates templates into a directory, adapt the files you want
+to override, and point `with_reuse` to that directory:
 
 ```julia
 write_templates("reuse_templates")
@@ -85,11 +105,13 @@ plugins = with_reuse(;
 )
 ```
 
-You can do this selectively, `with_reuse` will fallback to the standard template whenever a template file is missing in the given directory.
+Files ending in `.mustache` are rendered. Missing template files fall back to the
+bundled templates.
 
 ---
 
-For a more detailed overview, please refer to the [documentation](https://bsl-support.de/julia/ReusePkgTemplates.jl/).
+For a more detailed overview, please refer to the
+[documentation](https://bsl-support.de/julia/ReusePkgTemplates.jl/).
 
 <!-- PkgTemplates: REUSE licensing section start -->
 ## Licensing

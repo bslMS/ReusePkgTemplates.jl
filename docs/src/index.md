@@ -5,7 +5,7 @@ CurrentModule = ReusePkgTemplates
 # ReusePkgTemplates.jl
 
 `ReusePkgTemplates.jl` helps generate Julia package repositories that start with
-explicit REUSE/SPDX licensing metadata instead of retrofitting it later.
+REUSE/SPDX licensing metadata instead of retrofitting it later.
 
 It builds on [PkgTemplates.jl](https://juliaci.github.io/PkgTemplates.jl/stable/)
 and adds a REUSE-aware setup layer for file-level SPDX metadata, an outbound
@@ -13,7 +13,7 @@ package-level license declaration, generated `LICENSES/` content, `REUSE.toml`
 annotations, `Project.toml` license metadata, and optional REUSE linting in GitHub Actions.
 
 Use it when you want ordinary Julia package scaffolds, but with licensing policy
-made explicit from the first commit.
+clearly declared from the first commit.
 
 ## Why this package exists
 
@@ -24,17 +24,18 @@ under possibly different licenses.
 
 `ReusePkgTemplates.jl` makes the initial scaffold compatible with the
 [REUSE](https://reuse.software/) convention: files carry machine-readable SPDX
-metadata, file-level license texts are collected under `LICENSES/`, and the
-package-level license declaration is recorded separately in the root `LICENSE`
-file together with the supporting license texts implied by that declaration.
+metadata, file-level license texts are collected under `LICENSES/`, while the root
+`LICENSE` file records the package-level license declaration and the supporting
+license texts implied by that declaration.
 
 ## What it provides
 
 - a REUSE-aware plugin for PkgTemplates.jl,
 - a `with_reuse` convenience wrapper for composing ordinary PkgTemplates plugins,
-- template customization support through `write_templates` and `template_dir`,
-- defaults for `REUSE.toml`, `LICENSES/`, `LICENSE`, and `Project.toml` licensing
-  fields,
+- customization support for ReusePkgTemplates-owned templates through
+  `write_templates` and `template_dir`,
+- defaults for `REUSE.toml`, generated `LICENSES/` content, and package-level
+  `LICENSE` and `Project.toml` metadata,
 - optional GitHub Actions integration for REUSE linting.
 
 ## What it does not do
@@ -50,10 +51,10 @@ dependency, or distribution context.
 
 ## Suggested reading path
 
-Start with the User Guide to create a first template. Use the Licensing FAQ for
-conceptual questions about package-level declarations, file-level SPDX metadata,
-and REUSE layout. Use the API Reference once you need precise constructor and
-keyword details.
+Start with the [User Guide](@ref user-guide) to create a first template. Use the
+[Licensing FAQ](@ref licensing-faq) for conceptual questions about package-level
+declarations, file-level SPDX metadata, and REUSE layout. Use the
+[API Reference](@ref api-reference) once you need precise constructor and keyword details.
 
 ## Status
 

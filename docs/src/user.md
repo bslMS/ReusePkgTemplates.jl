@@ -2,7 +2,9 @@
 CurrentModule = ReusePkgTemplates
 ```
 
-# [SPDX License Expressions](https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/)
+# [User Guide](@id user-guide)
+
+### [SPDX License Expressions](https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/)
 
 - Use SPDX license identifiers and expressions such as `MIT`, `Apache-2.0`,
   `GPL-3.0-or-later`, or `MIT OR Apache-2.0`.
@@ -17,7 +19,7 @@ CurrentModule = ReusePkgTemplates
 - Custom license texts may be referenced with `LicenseRef-...` identifiers. The
   corresponding text must be provided in `license_ref_dir`.
 
-# [License Approval Policies](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.UnconjoinedOSIApproval)
+### [License Approval Policies](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.UnconjoinedOSIApproval)
 
 `license_policy` must be one of the following symbols: `:general_registry`,
 `:osi_approved`, `:free`, or `:none`.
@@ -45,7 +47,7 @@ CurrentModule = ReusePkgTemplates
   `LicenseRef-...` identifiers.
 
 !!! note "General Registry Approval"
-  The `:general_registry` approval is by no means a guarantee for an admissible format
-  to Julia's General Registry registration. It is the authors best attempt at helping to
-  shape a REUSE-compliant repository in such a way that it will likely meet upon a favorable
-  review.
+    The `:general_registry` approval is by no means a guarantee for an admissible format
+    to Julia's General Registry registration. It is the authors best attempt at helping to
+    shape a REUSE-compliant repository in such a way that it will likely meet upon a favorable
+    review.

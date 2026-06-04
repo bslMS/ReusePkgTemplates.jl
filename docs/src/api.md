@@ -2,7 +2,7 @@
 CurrentModule = ReusePkgTemplates
 ```
 
-# API Reference
+# [API Reference](@id api-reference)
 
 ```@docs
 with_reuse

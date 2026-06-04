@@ -129,14 +129,12 @@ template files that already exist in `dir`. Hidden platform files such as
 ```julia
 write_templates("reuse_templates")
 
-t = Template(;
-    plugins = with_reuse([
+plugins = with_reuse([
         Git(),
-        SrcDir(),
+        SrcDir()
     ];
-        template_dir = "reuse_templates",
-        package_license = "EUPL-1.2+",
-    ),
+    package_license = "EUPL-1.2+",
+    template_dir = "reuse_templates"
 )
 ```
 """
