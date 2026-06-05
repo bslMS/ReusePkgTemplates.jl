@@ -12,32 +12,32 @@ CurrentModule = ReusePkgTemplates
     publication, redistribution, relicensing, or registry policy questions,
     consult a qualified lawyer.
 
-## Why is this not just a PkgTemplates.jl pull request?
+## Why is this not just a PkgTemplates pull request?
 
-REUSE support is not an ordinary additive plugin. It maps over the generated
+REUSE support is not an ordinary plugin addition as it maps over the generated
 repository: file headers, generated license texts, `REUSE.toml`, root `LICENSE`,
 `Project.toml` metadata, and CI checks all need to agree.
 
 That makes REUSE support cross-cutting in a way that does not fit cleanly beside
-PkgTemplates.jl's traditional `License` plugin. The latter reflects the common
-single-license workflow; `ReusePkgTemplates.jl` instead distinguishes
+PkgTemplates' traditional `License` plugin. The latter reflects the common
+single-license workflow; ReusePkgTemplates instead distinguishes
 file-level SPDX metadata from the package-level license declaration.
 
-For that reason this package wraps PkgTemplates.jl rather than replacing it or
+For that reason this package wraps PkgTemplates rather than replacing it or
 requiring PkgTemplates.jl itself to adopt a more opinionated licensing model.
 
-## Why not just use one license for a package?
+## Why not just use a single license?
 
-### File-level licensing: the inbound licensing problem
+### [File-Level Licensing: The Inbound Licensing Problem](@id inbound-licensing)
 
 If all relevant files in a repository are source code and are intended to be
 distributed under the same terms, a single package-level license declaration can
 be clear and sufficient.
 
 But many package repositories are not that uniform and will contain documentation,
-diagrams, generated files, data, configuration files, assets, and project
+documentation assets, generated files, data, configuration files, and other project
 infrastructure. Applying a single software license to all of these materials can be
-misleading or impossible, especially when imported material may only be
+misleading or even impossible, especially when imported material may only be
 redistributed under its existing terms.
 
 This is especially visible for data: public-sector and research-data guidance
@@ -45,70 +45,63 @@ commonly treats datasets and databases as their own licensing problem, with
 dedicated recommendations such as Datenlizenz Deutschland, CC0, CC BY, or Open
 Data Commons licenses.
 
-### Package-level licensing: the outbound licensing problem
+For imported non-code material, merely linking to an external source is often
+weaker than recording the applicable license information in the repository: links
+can break and targets can change.
+
+### [Package-Level Licensing: The Outbound Licensing Problem](@id outbound-licensing)
 
 A package-level license declaration answers a different question: under which
 terms is the package intended to be distributed as a combined work?
 
 There are good reasons for permissive, weak-copyleft, and strong-copyleft open
-source licenses. The right choice depends on the goals of the package authors.
+source licenses. The right choice depends on the goals of the copyright holders.
 For example, a package may use a copyleft license as its package-level
 declaration while still containing some files under more permissive licenses
 where that is appropriate.
 
-`ReusePkgTemplates.jl` therefore separates two questions: What is the intended
+ReusePkgTemplates therefore separates two questions: What is the intended
 outbound license for the package as distributed? What license applies to each
 individual file?
 
-The root `LICENSE` file accordingly records the outbound package-level
-license declaration and the license texts it references. File-level licensing
-is recorded through SPDX metadata and, in accordance with REUSE, the corresponding
-license texts are collected under `LICENSES/`.
+The root `LICENSE` file accordingly records the package-level
+license expression and the license texts it references. File-level licensing
+is recorded through SPDX metadata and optionally a `REUSE.toml`. In accordance with REUSE,
+the corresponding license texts are collected under `LICENSES/`.
 
 ## Why not leave outbound licensing to SBOM tooling?
 
-SBOM tooling can describe files, components, dependencies, and license metadata.
-That information is useful evidence for review, but it does not declare
-the terms under which the package author intends to distribute it as a software work.
+SBOM tools are useful. They list files, components, "dependency
+closures", and license metadata. But they do not answer the main outbound licensing
+question: under which terms may the combined work be distributed?
 
-Outbound licensing is not a purely mechanical aggregation of file-level licenses
-or dependency metadata. It involves an intentional legal and policy decision by
-the copyright holder or distributor: what is the licensed work, under which terms
-is it offered, and under which assumptions is that declaration meant to hold?
-
-`ReusePkgTemplates.jl` therefore treats SBOM-style metadata and tooling as
-supporting evidence, not as substitutes for an explicit package-level license
-declaration.
+SBOM and SPDX tools usually keep dependencies as separate components with their
+own license data. For example, the `PackageLicenseDeclared` is not meant to cover external
+code dependencies. That is the right _technical_ model for component accounting. But
+licensing is _declarative_ and _relational_: someone who distributes a combined work has
+to make an informed decision under which terms that combined work can be distributed,
+modified, copied, and used. An SBOM cannot make a decision — it is not a copyright holder.
 
 ## Should dependency licenses influence the package-level license declaration?
 
-Yes, probably for dependencies that are expected to be used with the package in ordinary
-operation or that are commonly distributed together with it.
+In my opinion, for dependencies that are expected to be used with the package in ordinary
+operation the answer rather firmly is: yes.
 
 A package-level license declaration is not a mechanical aggregation of dependency
 licenses, and it does not relicense dependencies. Dependencies remain governed by
 their own licenses. Still, the package-level declaration should be made with the
-expected dependency environment in mind. A package that normally depends on
-copyleft components, generated artifacts, extensions, or binary libraries deserves
-closer review before choosing a permissive package-level declaration.
+expected dependency environment in mind. A package with mandatory copyleft
+dependencies, generated artifacts, extensions, or binary libraries should be
+reviewed carefully before it is declared permissively licensed at package level.
 
-This is one reason why a permissive license such as MIT is not always the most
-informative package-level declaration. A permissive declaration can be clear for
-the package author's own files, but it may give an incomplete impression if the
-package is practically inseparable from components that impose additional
-redistribution obligations.
+This is one reason why MIT is not always an adequate package-level declaration.
+MIT may be correct for individual files in the package, but it may give a misleading
+impression if the expected combined package is practically inseparable from components
+that impose additional redistribution obligations (e.g., copyleft licenses).
 
-For example, a package may contain mostly MIT-licensed project-authored files and
-still be distributed, in its ordinary instantiated form, together with mandatory
-copyleft dependencies. In that situation the MIT file-level notices remain true,
-but they do not by themselves describe the licensing obligations of the complete
-functional distribution.
-
-`ReusePkgTemplates.jl` therefore treats dependency licensing as a separate review
-problem, but not as an irrelevant one. Dependency licenses are not automatically
-folded into the package-level declaration, yet expected dependencies should inform
-the licensing policy chosen for the package and the warnings recorded in the
-licensing documentation.
+Dependency licenses are not just "folded" into the package-level declaration merely
+because they appear in a dependency closure. Instead, tightly coupled, expected
+dependencies should inform the licensing policy chosen for the package.
 
 ## Further reading
 
