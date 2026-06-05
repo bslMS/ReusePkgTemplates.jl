@@ -15,20 +15,20 @@ annotations, `Project.toml` license metadata, and optional REUSE linting in GitH
 Use it when you want ordinary Julia package scaffolds, but with licensing policy
 clearly declared from the first commit.
 
-## Why this package exists
+## Why This Package Exists
 
 Julia package templates traditionally start from a root `LICENSE` file containing
 a single license text. That is simple, but it does not scale well to repositories
 containing source code, documentation, generated files, assets, data, and tooling
 under possibly different licenses.
 
-`ReusePkgTemplates.jl` makes the initial scaffold compatible with the
+ReusePkgTemplates makes the initial scaffold compatible with the
 [REUSE](https://reuse.software/) convention: files carry machine-readable SPDX
 metadata, file-level license texts are collected under `LICENSES/`, while the root
 `LICENSE` file records the package-level license declaration and the supporting
 license texts implied by that declaration.
 
-## What it provides
+## What It Provides
 
 - a REUSE-aware plugin for PkgTemplates.jl,
 - a `with_reuse` convenience wrapper for composing ordinary PkgTemplates plugins,
@@ -38,9 +38,9 @@ license texts implied by that declaration.
   `LICENSE` and `Project.toml` metadata,
 - optional GitHub Actions integration for REUSE linting.
 
-## What it does not do
+## What It Does Not Do
 
-`ReusePkgTemplates.jl` is not a legal compatibility checker, a standalone SPDX
+ReusePkgTemplates is not a legal compatibility checker, a standalone SPDX
 parser, or a repository license auditor. Those concerns belong in
 [ReuseLicensing.jl](https://bsl-support.de/julia/ReuseLicensing.jl/) and in
 ordinary legal review.
@@ -49,7 +49,7 @@ The package records licensing intent and generates reviewable metadata. It does
 not prove that a package-level license declaration is compatible with every file,
 dependency, or distribution context.
 
-## Suggested reading path
+## Suggested Reading Path
 
 Start with the [User Guide](@ref user-guide) to create a first template. Use the
 [Licensing FAQ](@ref licensing-faq) for conceptual questions about package-level

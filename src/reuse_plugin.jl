@@ -11,8 +11,9 @@ writes the outbound package-level `LICENSE` declaration, appends optional README
 licensing text, adds SPDX headers to generated Julia source/test files, and can
 add a REUSE lint GitHub Actions workflow.
 
-Most users should configure REUSE support with [`with_reuse`](@ref), which also
-disables PkgTemplates' conventional `License` plugin.
+Direct construction of `Reuse` is intended for advanced users and tests. Most users should
+configure REUSE support with [`with_reuse`](@ref), which also disables PkgTemplates'
+conventional `License` plugin.
 
 # Keyword Arguments
 
