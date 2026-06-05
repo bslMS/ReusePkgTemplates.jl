@@ -67,10 +67,13 @@ t = Template(; plugins)
 
 - Deprecated GNU-style SPDX identifiers such as `GPL-3.0+` are accepted as a convenience
   and normalized by ReuseLicensing.jl.
-- The `:general_registry` policy is a best-effort helper for generating packages that are
-  likely to satisfy Julia General Registry license expectations. It is not a guarantee of
-  registry acceptance and does not assess legal compatibility between the package-level
-  declaration and file-level licenses.
+- The `:general_registry` policy is a best-effort helper for generating packages
+  that are likely to satisfy Julia General Registry license expectations. It requires
+  package-level and code license expressions to have an unconjoined OSI-approved path.
+- For documentation, assets, and infrastructure, `:general_registry` also accepts
+  open-content licenses commonly used for non-code repository material. This is not
+  an official General Registry validator, does not guarantee registry acceptance, and
+  does not assess legal compatibility between package-level and file-level licenses.
 """
 function with_reuse(
         plugins = PkgTemplates.Plugin[];
