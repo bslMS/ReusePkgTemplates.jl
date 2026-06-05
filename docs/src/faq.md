@@ -48,7 +48,7 @@ Data Commons licenses.
 ### Package-level licensing: the outbound licensing problem
 
 A package-level license declaration answers a different question: under which
-terms is the package intended to be distributed as a package?
+terms is the package intended to be distributed as a combined work?
 
 There are good reasons for permissive, weak-copyleft, and strong-copyleft open
 source licenses. The right choice depends on the goals of the package authors.
