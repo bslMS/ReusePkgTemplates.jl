@@ -44,7 +44,7 @@ PkgTemplates.@plugin struct Reuse <: PkgTemplates.Plugin
     license_policy::Symbol = :general_registry
 end
 
-const PACKAGE_LICENSE_DECLARED_FILE = "LICENSE"
+const PACKAGE_LICENSE_FILE = "LICENSE"
 const REUSE_LICENSES_DIR = "LICENSES"
 const REUSE_TOML_FILE = "REUSE.toml"
 const REUSE_LINT_WORKFLOW_FILE = joinpath(".github", "workflows", "REUSE.yml")
@@ -308,7 +308,7 @@ function PkgTemplates.view(p::Reuse, t::PkgTemplates.Template, pkg::AbstractStri
         "INFRASTRUCTURE_LICENSE" => config.infrastructure_license,
         "DOCS_LICENSE" => config.docs_license,
         "DOCS_ASSETS_LICENSE" => config.docs_assets_license,
-        "PACKAGE_LICENSE_DECLARED_FILE" => PACKAGE_LICENSE_DECLARED_FILE,
+        "PACKAGE_LICENSE_FILE" => PACKAGE_LICENSE_FILE,
         "README" => readme_destination,
         "REUSE_SPECIFICATION_VERSION" => ReuseLicensing.reuse_specification_version(),
         "SPDX_LICENSE_LIST_VERSION" => ReuseLicensing.spdx_license_list_version()
@@ -452,7 +452,7 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
     end
 
     PkgTemplates.gen_file(
-        joinpath(pkg_dir, PACKAGE_LICENSE_DECLARED_FILE),
+        joinpath(pkg_dir, PACKAGE_LICENSE_FILE),
         join(chomp.(license_parts), "\n\n") * "\n"
     )
 
