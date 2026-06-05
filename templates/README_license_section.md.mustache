@@ -1,0 +1,26 @@
+## Licensing
+
+This package's authoritative package-level license expression, copyright notice,
+and corresponding license texts are recorded in [`LICENSE`](LICENSE).
+
+Machine-readable package licensing metadata is recorded in the `[reuse_licensing]`
+table of [`Project.toml`](Project.toml).
+
+Individual files may carry separate file-level license expressions, as recorded by their
+SPDX notices or by [`REUSE.toml`](REUSE.toml). This project follows the
+[REUSE specification](https://reuse.software/spec/) for file-level copyright and licensing
+information. License texts used for file-level REUSE licensing are stored in
+[`LICENSES/`](LICENSES/).
+
+> Recorded `Manifest.toml` files under `.licensing/manifests/`, where provided,
+> document dependency resolutions considered when choosing the package-level
+> license expression. They are evidence for that licensing decision, not guarantees for
+> other Julia versions, platforms, dependency resolutions, extensions, artifacts,
+> load paths, or local modifications.
+
+To verify the file-level REUSE metadata:
+
+```bash
+reuse lint
+reuse spdx
+```

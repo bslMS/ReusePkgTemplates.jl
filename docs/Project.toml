@@ -1,0 +1,7 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+ReusePkgTemplates = "5fa6b6e1-399e-47f9-ab13-289ea1759384"
+
+[compat]
+Documenter = "1"
+ReusePkgTemplates = "0.1"

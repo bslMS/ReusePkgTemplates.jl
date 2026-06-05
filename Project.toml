@@ -1,0 +1,26 @@
+name = "ReusePkgTemplates"
+uuid = "5fa6b6e1-399e-47f9-ab13-289ea1759384"
+authors = ["Guido Wolf Reichert <gwr@bsl-support.de>", "contributors"]
+version = "0.1.0"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+PkgTemplates = "14b8a8f1-9102-5b29-a752-f990bacb7fe1"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+ReuseLicensing = "de4d323f-34a2-45c1-b1df-90653b04f4ca"
+TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+
+[compat]
+Dates = "1"
+PkgTemplates = "0.7"
+Reexport = "1.2"
+ReuseLicensing = "0.2"
+TOML = "1"
+julia = "1.10"
+
+[reuse_licensing]
+reuse_specification_version = "3.3"
+spdx_license_list_version = "3.28.0"
+package_license_expression = "EUPL-1.2+"
+package_copyright_notice = "Copyright © 2026 Guido Wolf Reichert and contributors"
+package_license_file = "LICENSE"
