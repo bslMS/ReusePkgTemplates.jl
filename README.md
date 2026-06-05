@@ -58,7 +58,7 @@ plugins = with_reuse(
     package_license = "EUPL-1.2+",
     docs_license = "CC-BY-4.0",
     infrastructure_license = "0BSD",
-    readme_license_section = true
+    readme_licensing_section = true
 )
 
 t = Template(;

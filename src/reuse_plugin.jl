@@ -27,7 +27,7 @@ The keyword arguments are the same as for [`with_reuse`](@ref):
 - `license_ref_dir`
 - `template_dir`
 - `enable_reuse_lint`
-- `readme_license_section`
+- `readme_licensing_section`
 - `license_policy`
 """
 PkgTemplates.@plugin struct Reuse <: PkgTemplates.Plugin
@@ -40,7 +40,7 @@ PkgTemplates.@plugin struct Reuse <: PkgTemplates.Plugin
     license_ref_dir::Union{AbstractString, Nothing} = nothing
     template_dir::Union{AbstractString, Nothing} = nothing
     enable_reuse_lint::Bool = true
-    readme_license_section::Bool = false
+    readme_licensing_section::Bool = false
     license_policy::Symbol = :general_registry
 end
 
@@ -50,7 +50,7 @@ const REUSE_TOML_FILE = "REUSE.toml"
 const REUSE_LINT_WORKFLOW_FILE = joinpath(".github", "workflows", "REUSE.yml")
 
 const REUSE_TOML_TEMPLATE = "REUSE.toml.mustache"
-const README_LICENSE_SECTION_TEMPLATE = "README_license_section.md.mustache"
+const README_LICENSING_SECTION_TEMPLATE = "README_licensing_section.md.mustache"
 const REUSE_LINT_WORKFLOW_TEMPLATE = "REUSE.yml.mustache"
 # REUSE-IgnoreStart
 const REUSE_JULIA_HEADER_TEMPLATE = """
@@ -456,7 +456,7 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
         join(chomp.(license_parts), "\n\n") * "\n"
     )
 
-    # Render the `README_license_section` template and append to `README.md` (optional).
+    # Render the `README_licensing_section` template and append to `README.md` (optional).
     readme_plugin = PkgTemplates.getplugin(t, PkgTemplates.Readme)
     readme_file = if readme_plugin === nothing
         nothing
@@ -464,8 +464,8 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
         joinpath(pkg_dir, PkgTemplates.destination(readme_plugin))
     end
 
-    template = template_path(p, README_LICENSE_SECTION_TEMPLATE)
-    if p.readme_license_section && readme_file !== nothing && isfile(readme_file)
+    template = template_path(p, README_LICENSING_SECTION_TEMPLATE)
+    if p.readme_licensing_section && readme_file !== nothing && isfile(readme_file)
         section = PkgTemplates.render_file(
             template,
             PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p)

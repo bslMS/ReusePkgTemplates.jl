@@ -27,7 +27,7 @@ end
         docs_license = "CC-BY-4.0",
         docs_assets_license = "CC-BY-SA-4.0",
         infrastructure_license = "0BSD",
-        readme_license_section = true
+        readme_licensing_section = true
     )
 
     t = Template(;
@@ -113,7 +113,7 @@ end
     write_templates(dir)
 
     @test isfile(joinpath(dir, "REUSE.toml.mustache"))
-    @test isfile(joinpath(dir, "README_license_section.md.mustache"))
+    @test isfile(joinpath(dir, "README_licensing_section.md.mustache"))
     @test isfile(joinpath(dir, "REUSE.yml.mustache"))
     @test !isfile(joinpath(dir, ".DS_Store"))
 end
@@ -128,13 +128,13 @@ end
 
 @testitem "fallback to templates if only one template is given" setup=[WithTempdir] begin
     dir = mktempdir()
-    write(joinpath(dir, "README_license_section.md.mustache"),
+    write(joinpath(dir, "README_licensing_section.md.mustache"),
         "Custom licensing section.\n")
 
     plugins = with_reuse(;
         package_license = "EUPL-1.2+",
         template_dir = dir,
-        readme_license_section = true
+        readme_licensing_section = true
     )
 
     t = Template(;

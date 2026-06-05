@@ -39,7 +39,7 @@ package-level license declaration together with REUSE file-level licensing metad
   overrides. Missing files fall back to the bundled templates.
 - `enable_reuse_lint::Bool`: Whether to add a REUSE lint GitHub Actions workflow when
   `GitHubActions` is present. Defaults to `true`.
-- `readme_license_section::Bool`: Whether to append a licensing section to the generated
+- `readme_licensing_section::Bool`: Whether to append a licensing section to the generated
   README. Defaults to `false`.
 - `license_policy::Symbol`: Approval policy for SPDX license expressions. Must be one of
   `:general_registry`, `:osi_approved`, `:free`, or `:none`. Defaults to
@@ -57,7 +57,7 @@ plugins = with_reuse(
     package_license = "EUPL-1.2+",
     docs_license = "CC-BY-SA-4.0",
     infrastructure_license = "0BSD",
-    readme_license_section = true
+    readme_licensing_section = true
 )
 
 t = Template(; plugins)
@@ -86,7 +86,7 @@ function with_reuse(
         license_ref_dir::Union{AbstractString, Nothing} = nothing,
         template_dir::Union{AbstractString, Nothing} = nothing,
         enable_reuse_lint::Bool = true,
-        readme_license_section::Bool = false,
+        readme_licensing_section::Bool = false,
         license_policy::Symbol = :general_registry
 )
     any(p -> p isa Reuse, plugins) && throw(ArgumentError(
@@ -105,7 +105,7 @@ function with_reuse(
         license_ref_dir,
         template_dir,
         enable_reuse_lint,
-        readme_license_section,
+        readme_licensing_section,
         license_policy
     )
 
