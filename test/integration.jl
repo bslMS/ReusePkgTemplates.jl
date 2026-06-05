@@ -182,7 +182,12 @@ end
 
 @testitem "missing template_dir throws error" setup=[WithTempdir] begin
     plugins = with_reuse(; template_dir = "")
-    @test_throws ArgumentError Template(; plugins)
+    @test_throws ArgumentError Template(;
+        user = "test-user",
+        authors = "Test Author <test@example.org>",
+        dir = tmp,
+        plugins
+    )
 end
 
 @testitem "package-level copyright_holders differ from authors" setup=[WithTempdir] begin
@@ -211,17 +216,32 @@ end
 
 @testitem "copyright_holders must not be empty" setup=[WithTempdir] begin
     plugins = with_reuse(; copyright_holders = String[])
-    @test_throws ArgumentError Template(; plugins)
+    @test_throws ArgumentError Template(;
+        user = "test-user",
+        authors = "Test Author <test@example.org>",
+        dir = tmp,
+        plugins
+    )
 end
 
 @testitem "copyright_holders must not be blank holder" setup=[WithTempdir] begin
     plugins = with_reuse(; copyright_holders = String[" "])
-    @test_throws ArgumentError Template(; plugins)
+    @test_throws ArgumentError Template(;
+        user = "test-user",
+        authors = "Test Author <test@example.org>",
+        dir = tmp,
+        plugins
+    )
 end
 
 @testitem "copyright_holders must not contain blank amid valid holders" setup=[WithTempdir] begin
     plugins = with_reuse(; copyright_holders = String[" ", "Anton"])
-    @test_throws ArgumentError Template(; plugins)
+    @test_throws ArgumentError Template(;
+        user = "test-user",
+        authors = "Test Author <test@example.org>",
+        dir = tmp,
+        plugins
+    )
 end
 
 # REUSE-IgnoreEnd
