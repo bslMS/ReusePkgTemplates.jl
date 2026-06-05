@@ -25,9 +25,10 @@ CurrentModule = ReusePkgTemplates
 `:osi_approved`, `:free`, or `:none`.
 
 - `license_policy = :general_registry` requires that `package_license` and `code_license`
-  expression have an [unconjoined OSI-approved path](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.UnconjoinedOSIApproval)
-  Currently, General Registry expects that `package_license` resolves to a single
-  OSI-approved license without exception.
+  expressions have an
+  [unconjoined OSI-approved path](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.UnconjoinedOSIApproval).
+  For the safest General Registry registration path, use a single OSI-approved
+  license for `package_license`, without `AND`, `OR`, `WITH`, or `LicenseRef-...`.
 
   All other license expressions must either have an unconjoined OSI-approved or an
   [open content path](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.OpenContentApproval).
