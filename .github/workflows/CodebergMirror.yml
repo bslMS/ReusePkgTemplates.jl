@@ -25,11 +25,14 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.CODEBERG_SSH_KEY }}
           SSH_KNOWN_HOSTS: ${{ vars.CODEBERG_KNOWN_HOSTS }}
         run: |
+          test -n "$SSH_PRIVATE_KEY"
+          test -n "$SSH_KNOWN_HOSTS"
           install -m 700 -d ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/codeberg
+          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/codeberg
           chmod 600 ~/.ssh/codeberg
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
+          ssh-keygen -y -f ~/.ssh/codeberg > /dev/null
 
       - name: Mirror to Codeberg
         env:
