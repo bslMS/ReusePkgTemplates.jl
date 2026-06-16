@@ -17,8 +17,14 @@
   <a href="https://juliaci.github.io/PkgTemplates.jl/stable/">PkgTemplates.jl</a> ·
   <a href="https://bsl-support.de/julia/ReuseLicensing.jl/">ReuseLicensing.jl</a> ·
   <a href="https://reuse.software/">REUSE</a> ·
-  <a href="https://github.com/bslMS/ReusePkgTemplates.jl/issues">Issues</a>
+  <a href="https://github.com/bslMS/ReusePkgTemplates.jl/issues">Issues</a> ·
+  <a href="https://codeberg.org/bslMS/ReusePkgTemplates.jl">Codeberg mirror</a>
 </p>
+
+This repository is mirrored read-only on
+[Codeberg](https://codeberg.org/bslMS/ReusePkgTemplates.jl). Please use the
+[GitHub repository](https://github.com/bslMS/ReusePkgTemplates.jl) for issues,
+pull requests, and releases.
 
 ReusePkgTemplates.jl provides a small convenience layer on top of PkgTemplates.jl
 for generating Julia package scaffolds with REUSE/SPDX licensing metadata. Generated
