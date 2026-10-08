@@ -13,6 +13,7 @@ path = [
     ".*.yml",
     ".drone.star",
     ".JuliaFormatter.toml",
+    "JuliaFormat.toml",
     ".codecov.yml",
     "CITATION.bib",
     "CODEOWNERS",
