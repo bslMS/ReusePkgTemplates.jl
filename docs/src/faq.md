@@ -71,16 +71,18 @@ the corresponding license texts are collected under `LICENSES/`.
 
 ## Why not leave outbound licensing to SBOM tooling?
 
-SBOM tools are useful. They list files, components, "dependency
-closures", and license metadata. But they do not answer the main outbound licensing
-question: under which terms may the combined work be distributed?
+SBOM tools are useful. They list files, components, "dependency closures," and license
+metadata. But their analysis does not replace the authorized licensor's outbound declaration.
 
 SBOM and SPDX tools usually keep dependencies as separate components with their
-own license data. For example, the `PackageLicenseDeclared` is not meant to cover external
-code dependencies. That is the right _technical_ model for component accounting. But
-licensing is _declarative_ and _relational_: someone who distributes a combined work has
-to make an informed decision under which terms that combined work can be distributed,
-modified, copied, and used. An SBOM cannot make a decision — it is not a copyright holder.
+own license data. For example, a component's `PackageLicenseDeclared` (SPDX v2.x) does not
+automatically cover its separately represented dependencies.
+
+SPDX distinguishes between _declared license information_ found within an artifact and a
+_concluded license assessment_ made by the SPDX data creator using that information and
+other evidence. In SPDX 3, these are represented as `hasDeclaredLicense` and
+`hasConcludedLicense`, respectively. An SBOM can record licensing decisions and assessments,
+but cannot independently grant permissions on behalf of copyright holders.
 
 ## Should dependency licenses influence the package-level license declaration?
 
