@@ -1,7 +1,11 @@
 using Pkg
 
-Pkg.develop(Pkg.PackageSpec(path = joinpath(@__DIR__, "..")))
-Pkg.instantiate()
+Pkg.activate(@__DIR__)
+
+cd(@__DIR__) do
+    Pkg.develop(Pkg.PackageSpec(path = ".."))
+    Pkg.instantiate()
+end
 
 using ReusePkgTemplates
 using Documenter
