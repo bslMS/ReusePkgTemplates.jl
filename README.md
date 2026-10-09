@@ -7,7 +7,7 @@
   ReusePkgTemplates.jl
 </h1>
 
-[![Documentation](https://img.shields.io/badge/docs-stable-blue.svg)](https://bsl-support.de/julia/ReusePkgTemplates.jl/)
+[![Documentation](https://img.shields.io/badge/docs-stable-blue.svg)](https://bslms.github.io/ReusePkgTemplates.jl/stable/)
 [![Development documentation](https://img.shields.io/badge/docs-dev-blue.svg)](https://bslms.github.io/ReusePkgTemplates.jl/dev/)
 [![Build Status](https://github.com/bslMS/ReusePkgTemplates.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/bslMS/ReusePkgTemplates.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/bslMS/ReusePkgTemplates.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/bslMS/ReusePkgTemplates.jl)
@@ -119,7 +119,7 @@ bundled templates.
 ---
 
 For a more detailed overview, please refer to the
-[documentation](https://bsl-support.de/julia/ReusePkgTemplates.jl/).
+[documentation](https://bslms.github.io/ReusePkgTemplates.jl/stable/).
 
 <!-- PkgTemplates: REUSE licensing section start -->
 ## Licensing
