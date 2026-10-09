@@ -1,7 +1,11 @@
 using Pkg
 
-Pkg.develop(Pkg.PackageSpec(path = joinpath(@__DIR__, "..")))
-Pkg.instantiate()
+Pkg.activate(@__DIR__)
+
+cd(@__DIR__) do
+    Pkg.develop(Pkg.PackageSpec(path = ".."))
+    Pkg.instantiate()
+end
 
 using ReusePkgTemplates
 using Documenter
@@ -21,13 +25,13 @@ makedocs(;
     authors = "Guido Wolf Reichert <gwr@bsl-support.de> and contributors",
     sitename = "ReusePkgTemplates.jl",
     format = Documenter.HTML(;
-        canonical = "https://bsl-support.de/julia/ReusePkgTemplates.jl",
+        canonical = "https://bslms.github.io/ReusePkgTemplates.jl/stable/",
         edit_link = "main",
         assets = String[],
         footer = "Copyright © 2026 Guido Wolf Reichert and contributors ⋅ " *
-        "Documentation v$PACKAGE_VERSION " *
-        "licensed under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) " *
-        "⋅ Built with [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl)."
+                 "Documentation v$PACKAGE_VERSION " *
+                 "licensed under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) " *
+                 "⋅ Built with [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl)."
     ),
     pages = [
         "Home" => "index.md",
@@ -36,3 +40,11 @@ makedocs(;
         "API Reference" => "api.md"
     ]
 )
+
+if get(ENV, "DOCS_DEPLOY", "false") == "true"
+    deploydocs(;
+        repo = "github.com/bslMS/ReusePkgTemplates.jl.git",
+        devbranch = "main",
+        push_preview = true
+    )
+end
