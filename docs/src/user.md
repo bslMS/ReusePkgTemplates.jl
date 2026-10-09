@@ -172,6 +172,7 @@ path = [
     ".licensing/**",
     ".drone.star",
     ".JuliaFormatter.toml",
+    "JuliaFormat.toml",
     ".codecov.yml",
     ".*.yml",
     "CITATION.bib",
