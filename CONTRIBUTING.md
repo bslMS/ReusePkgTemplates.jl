@@ -45,7 +45,7 @@ Keep shipped templates under `templates/*.mustache` covered by `REUSE.toml`.
 
 Unless you are changing package-level licensing, leave the root `LICENSE`
 and `[reuse_licensing]` table in `Project.toml` alone. Use
-[ReuseLicensing](https://bsl-support.de/julia/ReuseLicensing.jl/) tooling for
+[ReuseLicensing](https://bslms.github.io/ReuseLicensing.jl/stable/) tooling for
 package-level licensing changes so these declarations stay consistent.
 
 ## Code and tests

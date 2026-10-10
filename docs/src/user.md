@@ -138,7 +138,7 @@ The rules are as follows:
 a file's explicit SPDX notice. License and exception texts implied by all given license
 expressions are copied to `LICENSES/` and — for the `package_license` expression to
 `LICENSE`. The texts are provided by
-[`ReuseLicensing.jl`](https://bsl-support.de/julia/ReuseLicensing.jl/), which ships a
+[`ReuseLicensing.jl`](https://bslms.github.io/ReuseLicensing.jl/stable/), which ships a
 versioned snapshot of the SPDX License List data.
 
 ### License Domains
@@ -234,22 +234,22 @@ following symbols: `:general_registry`, `:osi_approved`, `:free`, or `:none`.
 
 - `license_policy = :general_registry` requires that `package_license` and `code_license`
   expressions have an
-  [unconjoined OSI-approved path](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.UnconjoinedOSIApproval).
+  [unconjoined OSI-approved path](https://bslms.github.io/ReuseLicensing.jl/stable/approval/#ReuseLicensing.UnconjoinedOSIApproval).
   For the safest General Registry registration path, use a single OSI-approved
   license for `package_license`, without `AND`, `OR`, `WITH`, or `LicenseRef-...`.
 
   All other license expressions must either have an unconjoined OSI-approved or an
-  [open content path](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.OpenContentApproval).
+  [open content path](https://bslms.github.io/ReuseLicensing.jl/stable/approval/#ReuseLicensing.OpenContentApproval).
 
 - `license_policy = :osi_approved` requires that all license expressions have an
-  [OSI-approved path](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.OSIApproved).
+  [OSI-approved path](https://bslms.github.io/ReuseLicensing.jl/stable/approval/#ReuseLicensing.OSIApproved).
   Under this policy a conjunction of OSI-approved licenses is admissible.
 
 - `license_policy = :free` requires that `package_license` and `code_license` expressions
   have an
-  [OSI-approved path](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.OSIApproved),
+  [OSI-approved path](https://bslms.github.io/ReuseLicensing.jl/stable/approval/#ReuseLicensing.OSIApproved),
   and that non-code expressions either have an OSI-approved or an
-  [FSF libre](https://bsl-support.de/julia/ReuseLicensing.jl/approval/#ReuseLicensing.FSFLibre)
+  [FSF libre](https://bslms.github.io/ReuseLicensing.jl/stable/approval/#ReuseLicensing.FSFLibre)
   approved path.
 
 - `license_policy = :none` requires valid SPDX license expressions that may contain custom
@@ -312,10 +312,10 @@ The `view` function of the `Reuse` plugin will provide the following replacement
 - `DOCS_ASSETS_LICENSE`: the normalized license expression from `docs_assets_license`.
 - `PACKAGE_LICENSE_FILE`: the package-level license file, i.e., `LICENSE`.
 - `README`: the destination given by the `Readme` plugin or else `README.md`.
-- `REUSE_SPECIFICATION_VERSION`: the result of
-  [`ReuseLicensing.reuse_specification_version()`].
-- `SPDX_LICENSE_LIST_VERSION`: the result of
-  [`ReuseLicensing.spdx_license_list_version()`].
+- `REUSE_SPECIFICATION_VERSION`: the REUSE specification version reported by
+  [`ReuseLicensing.reuse_specification_version()`](https://bslms.github.io/ReuseLicensing.jl/stable/#ReuseLicensing.reuse_specification_version-Tuple{}).
+- `SPDX_LICENSE_LIST_VERSION`: the bundled SPDX License List version reported by
+  [`ReuseLicensing.spdx_license_list_version()`](https://bslms.github.io/ReuseLicensing.jl/stable/spdx/#ReuseLicensing.spdx_license_list_version).
 
 !!! note "Templates Owned by ReuseLicensing.jl"
     To keep the package-level licensing contract clear and unambiguous, the
@@ -399,6 +399,3 @@ Documentation text is licensed separately with `docs_license`, while generated
 project infrastructure is covered by `infrastructure_license`. Setting
 `readme_licensing_section = true` appends the bundled licensing section to the
 generated README.
-
-[`ReuseLicensing.reuse_specification_version()`]: https://bsl-support.de/julia/ReuseLicensing.jl/#ReuseLicensing.reuse_specification_version-Tuple{}
-[`ReuseLicensing.spdx_license_list_version()`]: https://bsl-support.de/julia/ReuseLicensing.jl/spdx/#ReuseLicensing.spdx_license_list_version
