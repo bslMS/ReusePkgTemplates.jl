@@ -42,7 +42,7 @@ license texts implied by that declaration.
 
 ReusePkgTemplates is not a legal compatibility checker, a standalone SPDX
 parser, or a repository license auditor. Those concerns belong in
-[ReuseLicensing.jl](https://bsl-support.de/julia/ReuseLicensing.jl/) and in
+[ReuseLicensing.jl](https://bslms.github.io/ReuseLicensing.jl/stable/) and in
 ordinary legal review.
 
 The package records licensing intent and generates reviewable metadata. It does

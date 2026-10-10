@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://juliaci.github.io/PkgTemplates.jl/stable/">PkgTemplates.jl</a> ·
-  <a href="https://bsl-support.de/julia/ReuseLicensing.jl/">ReuseLicensing.jl</a> ·
+  <a href="https://bslms.github.io/ReuseLicensing.jl/stable/">ReuseLicensing.jl</a> ·
   <a href="https://reuse.software/">REUSE</a> ·
   <a href="https://github.com/bslMS/ReusePkgTemplates.jl/issues">Issues</a> ·
   <a href="https://codeberg.org/bslMS/ReusePkgTemplates.jl">Codeberg mirror</a>
