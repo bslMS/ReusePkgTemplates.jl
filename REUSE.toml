@@ -26,7 +26,8 @@ path = [
     "test/Manifest.toml",
     "scripts/Project.toml",
     "scripts/Manifest.toml",
-    "templates/*.mustache"
+    "templates/*.mustache",
+    "AGENTS.md"
 ]
 precedence = "closest"
 SPDX-FileCopyrightText = "2026 Guido Wolf Reichert and contributors"
