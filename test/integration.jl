@@ -1,6 +1,9 @@
 # SPDX-FileCopyrightText: 2026 Guido Wolf Reichert <gwr@bsl-support.de>
 # SPDX-License-Identifier: EUPL-1.2+
 
+# Baseline package generation, template-copying helpers, and partial-template fallback.
+# Defines the shared `WithTempdir` setup.
+
 # REUSE-IgnoreStart
 using TestItems
 
@@ -104,25 +107,37 @@ end
 
     # No duplication of [reuse_licensing] if posthook is repeated.
     reuse = only(p for p in t.plugins if p isa Reuse)
+    paths = [license, reuse_toml, project, readme, reuse_ci, sourcefile, testfile]
+    original = read.(paths, String)
     PkgTemplates.posthook(reuse, t, pkg)
     @test length(findall("[reuse_licensing]", read(project, String))) == 1
+    @test read.(paths, String) == original
 end
 
 @testitem "write complete set of templates to directory" begin
     dir = mktempdir()
-    write_templates(dir)
+    @test write_templates(dir) == dir
 
     @test isfile(joinpath(dir, "REUSE.toml.mustache"))
     @test isfile(joinpath(dir, "README_licensing_section.md.mustache"))
     @test isfile(joinpath(dir, "REUSE.yml.mustache"))
     @test !isfile(joinpath(dir, ".DS_Store"))
+    for name in (
+            "REUSE.toml.mustache", "README_licensing_section.md.mustache", "REUSE.yml.mustache")
+        @test read(joinpath(dir, name)) == read(ReusePkgTemplates.template_file(name))
+    end
 end
 
 @testitem "refuse to overwrite templates without force=true" begin
     dir = mktempdir()
     write_templates(dir)
+    path = joinpath(dir, "README_licensing_section.md.mustache")
+    original = read(path, String)
+    write(path, "User customization.\n")
     @test_throws ArgumentError write_templates(dir)
+    @test read(path, String) == "User customization.\n"
     write_templates(dir; force = true)
+    @test read(path, String) == original
     @test isfile(joinpath(dir, "REUSE.toml.mustache"))
 end
 
@@ -149,6 +164,7 @@ end
     @test occursin("Custom licensing section.", read(readme, String))
     # fallback still used for REUSE.toml.mustache
     @test occursin("version = 1", read(reuse_toml, String))
+    @test occursin("fsfe/reuse-action@", read(reuse_ci, String))
 end
 
 @testitem "plugin composition rejects Reuse and removes License plugins" begin
