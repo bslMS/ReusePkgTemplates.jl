@@ -45,6 +45,22 @@ Repository layout:
 - Never override an explicitly selected Julia environment.
 - Use Pkg for dependency management.
 
+## Tool Selection
+
+- Prefer Julia for project-specific evaluation, inspection, analysis, and
+  automation. Use Kaimon for interactive Julia work as described below.
+- Use native editing tools and standard CLI utilities for file operations,
+  repository navigation, and Git. Avoid scripts for routine operations
+  these tools already support.
+- When an ad hoc script is needed, default to Julia using the standard
+  library or existing project dependencies.
+- Use Python when required by existing tooling or when it offers a clear,
+  task-specific advantage over available Julia and native tools. Briefly
+  explain that choice.
+- Keep ad hoc scripts temporary and outside the repository. Do not introduce
+  Python dependencies or persistent Python scripts without agreement.
+- Do not add Julia dependencies solely to avoid Python.
+
 ## Kaimon Workflow
 
 - Use Kaimon for interactive Julia evaluation when available.
@@ -56,8 +72,9 @@ Repository layout:
   without authorization. Explain loss of in-memory state before restarting.
 - Use separate processes for isolated tests, documentation builds, and
   compatibility checks; retain the CLI testing workflow below.
-- If Kaimon is unavailable, continue independent work and use CLI tools when
-  appropriate. Report the fallback; CLI success does not verify Kaimon.
+- If Kaimon is unavailable, use a Julia subprocess for project-specific
+  evaluation and analysis, and native CLI tools where appropriate.
+  Report the fallback; CLI success does not verify Kaimon.
 - Keep Kaimon outside runtime dependencies; keep credentials and machine-specific
   connection settings outside the repository.
 
