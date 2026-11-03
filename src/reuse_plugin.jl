@@ -217,16 +217,16 @@ function validate_approved_path(which::AbstractString, parsed, license_policy::S
         )
     elseif license_policy === :free && which ∈ ("code", "package")
         requirement = "an OSI-approved path"
-        policy = ReuseLicensing.OSIApproval()
+        policy = ReuseLicensing.OSIApproved()
     elseif license_policy === :free && which ∉ ("code", "package")
         requirement = "an OSI-approved or FSF-libre approved path"
         policy = ReuseLicensing.AnyOf(
-            ReuseLicensing.OSIApproval(),
+            ReuseLicensing.OSIApproved(),
             ReuseLicensing.FSFLibre()
         )
     elseif license_policy === :osi_approved
         requirement = "an OSI-approved path"
-        policy = ReuseLicensing.OSIApproval()
+        policy = ReuseLicensing.OSIApproved()
     else
         return true
     end
