@@ -11,7 +11,7 @@
 [![Development documentation](https://img.shields.io/badge/docs-dev-blue.svg)](https://bslms.github.io/ReusePkgTemplates.jl/dev/)
 [![Build Status](https://github.com/bslMS/ReusePkgTemplates.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/bslMS/ReusePkgTemplates.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/bslMS/ReusePkgTemplates.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/bslMS/ReusePkgTemplates.jl)
-[![SciML Code Style](https://img.shields.io/static/v1?label=code%20style&message=SciML&color=9558b2&labelColor=389826)](https://github.com/SciML/SciMLStyle)
+[![Fatou Code Style](https://img.shields.io/static/v1?label=code%20style&message=Fatou&color=orange&labelColor=555555)](https://fatou.dev/guide/comparison.html#formatters)
 [![REUSE](https://github.com/bslMS/ReusePkgTemplates.jl/actions/workflows/REUSE.yml/badge.svg?branch=main)](https://github.com/bslMS/ReusePkgTemplates.jl/actions/workflows/REUSE.yml?query=branch%3Amain)
 
 <p align="center">
@@ -39,6 +39,11 @@ license classes for code, documentation, and infrastructure, and a clearer disti
 between package-level and file-level licensing.
 
 This package is under active development, and public APIs may still change.
+
+Development uses **Fatou v0.25.0** for Julia formatting and static linting,
+configured in [`fatou.toml`](fatou.toml) and pinned in CI. See the
+[contributor tooling and editor setup](CONTRIBUTING.md#fatou-tooling) for
+installation, safe formatting checks, and the temporary guard-formatting caveat.
 
 ## Installation
 

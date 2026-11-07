@@ -53,8 +53,64 @@ package-level licensing changes so these declarations stay consistent.
 Add or update tests for code changes and documentation for changes to public
 behavior. Keep unrelated formatting changes out of functional pull requests.
 
-Use the repository's SciML formatting settings: `.JuliaFormatter.toml` for
-JuliaFormatter.jl and `JuliaFormat.toml` for the Julia VS Code extension.
+### Fatou tooling
+
+Use **Fatou v0.25.0**, the version pinned in `.github/workflows/Fatou.yml`, for
+canonical Julia formatting and static linting. Follow the official
+[installation instructions](https://fatou.dev/installation.html) using your
+preferred installation method. Fatou is development tooling, not a Julia
+runtime dependency. `fatou.toml` sets a 92-character width, four-space
+indentation, LF line endings, and the shared lint configuration.
+
+From the repository root, verify your CLI version, format modified Julia code,
+and run the same checks as CI:
+
+```sh
+fatou --version # expected: fatou 0.25.0
+fatou format --safe .
+fatou format --safe --check .
+fatou lint .
+```
+
+Directory walks respect `.gitignore`, including generated documentation.
+Review formatting changes, especially macros, comments, and string literals.
+For awkwardly wrapped `@testitem` declarations, use equivalent parenthesized,
+comma-separated arguments selectively, preserving names, tags, and setup.
+Run the Julia tests as described in `AGENTS.md`; static linting does not
+replace Julia/Kaimon runtime analysis or test execution.
+
+The default lint rules remain enabled except `non-public-access`: the existing
+implementation uses PkgTemplates' documented plugin interface and shared
+ReuseLicensing helpers that are neither exported nor declared `public`.
+An inline `unused-import` exception retains `@with_kw_noshow`, which
+`PkgTemplates.@plugin` requires when expanding in the caller's scope.
+The explicit `PkgTemplates` import lets Fatou resolve the module independently
+of `@reexport`; it preserves the existing re-exports.
+
+Fatou v0.25.0 has a known
+[short-circuit guard formatting defect](https://github.com/jolars/fatou/issues/139):
+it splits the multiline `&& return` in `add_julia_spdx_header`. We temporarily
+accept that formatter output so the safe check stays enforced, without
+rewriting correct Julia code or excluding the file. Once v0.25.1 is available,
+verify the upstream fix, update the documented baseline and CI pin together,
+reformat, and revisit this exception.
+
+### Editors
+
+See Fatou's official [editor setup](https://fatou.dev/guide/editors.html).
+VS Code workspace recommendations include `jolars.fatou` and the Julia
+extension. Workspace settings select Fatou for Julia formatting on save and
+leave executable selection at the extension's default, which supports its
+bundled binary. Use the baseline version for CLI checks even if an editor
+extension bundles another version.
+
+Fatou's language server supplies formatting, diagnostics, and navigation.
+Keep the Julia extension for REPL, debugging, and testing, and retain Kaimon
+for runtime work. Concurrent language servers can show duplicate diagnostics,
+completion, or hover results. If that occurs, adjust the overlapping features
+in personal settings (for example, `fatou.languageFeatures.enable` or
+`julia.lint.run`); do not disable Julia runtime tooling. The workspace's
+`editor.defaultFormatter` selects Fatou when multiple formatters are present.
 
 ## Documentation
 
