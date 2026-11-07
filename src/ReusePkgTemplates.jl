@@ -8,7 +8,9 @@ using TOML: TOML
 
 using Reexport: @reexport
 @reexport using PkgTemplates
-using PkgTemplates: @plugin, @with_kw_noshow
+# PkgTemplates.@plugin expands to this macro in the caller's scope.
+# fatou-ignore unused-import: required by PkgTemplates.@plugin expansion
+using PkgTemplates: PkgTemplates, @with_kw_noshow
 using ReuseLicensing: ReuseLicensing
 
 export Reuse, with_reuse, write_templates
