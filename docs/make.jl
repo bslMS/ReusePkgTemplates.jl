@@ -17,7 +17,7 @@ DocMeta.setdocmeta!(
     ReusePkgTemplates,
     :DocTestSetup,
     :(using ReusePkgTemplates);
-    recursive = true
+    recursive = true,
 )
 
 makedocs(;
@@ -29,22 +29,22 @@ makedocs(;
         edit_link = "main",
         assets = String[],
         footer = "Copyright © 2026 Guido Wolf Reichert and contributors ⋅ " *
-                 "Documentation v$PACKAGE_VERSION " *
-                 "licensed under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) " *
-                 "⋅ Built with [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl)."
+            "Documentation v$PACKAGE_VERSION " *
+            "licensed under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) " *
+            "⋅ Built with [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl).",
     ),
     pages = [
         "Home" => "index.md",
         "User Guide" => "user.md",
         "Licensing FAQ" => "faq.md",
-        "API Reference" => "api.md"
-    ]
+        "API Reference" => "api.md",
+    ],
 )
 
 if get(ENV, "DOCS_DEPLOY", "false") == "true"
     deploydocs(;
         repo = "github.com/bslMS/ReusePkgTemplates.jl.git",
         devbranch = "main",
-        push_preview = true
+        push_preview = true,
     )
 end

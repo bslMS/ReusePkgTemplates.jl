@@ -100,7 +100,9 @@ function licenseref_files(dir::AbstractString)
     files = Dict{
         String,
         NamedTuple{
-            (:txt, :mustache), Tuple{Union{String, Nothing}, Union{String, Nothing}}}
+            (:txt, :mustache),
+            Tuple{Union{String, Nothing}, Union{String, Nothing}},
+        },
     }()
 
     for filename in readdir(dir)
@@ -110,7 +112,8 @@ function licenseref_files(dir::AbstractString)
             filename[(length("LicenseRef-") + 1):(end - length(".txt.mustache"))]
         elseif endswith(filename, ".txt")
             filename[(length("LicenseRef-") + 1):(end - length(".txt"))]
-        else # file not relevant
+        else
+            # file not relevant
             continue
         end
 
@@ -141,7 +144,9 @@ function parse_reuse_license(which::AbstractString, expr::AbstractString)
         return cached_parse_spdx_expression(expr)
     catch err
         err isa ArgumentError || rethrow()
-        throw(ArgumentError("Reuse: invalid $which SPDX license expression `$expr`: $(err.msg)"))
+        throw(ArgumentError(
+            "Reuse: invalid $which SPDX license expression `$expr`: $(err.msg)",
+        ))
     end
 end
 
@@ -173,7 +178,7 @@ function parsed_reuse_licenses(p::Reuse)
         code_license = code,
         infrastructure_license = infrastructure,
         docs_license = docs,
-        docs_assets_license = assets
+        docs_assets_license = assets,
     )
 end
 
@@ -192,12 +197,20 @@ function reuse_config(parsed)
         assets.expression,
         union(code.licenses, infrastructure.licenses, docs.licenses, assets.licenses),
         union(
-            code.exceptions, infrastructure.exceptions, docs.exceptions, assets.exceptions),
-        union(code.licenserefs, infrastructure.licenserefs,
-            docs.licenserefs, assets.licenserefs),
+            code.exceptions,
+            infrastructure.exceptions,
+            docs.exceptions,
+            assets.exceptions,
+        ),
+        union(
+            code.licenserefs,
+            infrastructure.licenserefs,
+            docs.licenserefs,
+            assets.licenserefs,
+        ),
         package.licenses,
         package.exceptions,
-        package.licenserefs
+        package.licenserefs,
     )
 end
 
@@ -213,7 +226,7 @@ function validate_approved_path(which::AbstractString, parsed, license_policy::S
         requirement = "an unconjoined OSI-approved or open content path"
         policy = ReuseLicensing.AnyOf(
             ReuseLicensing.UnconjoinedOSIApproval(),
-            ReuseLicensing.OpenContentApproval()
+            ReuseLicensing.OpenContentApproval(),
         )
     elseif license_policy === :free && which ∈ ("code", "package")
         requirement = "an OSI-approved path"
@@ -222,7 +235,7 @@ function validate_approved_path(which::AbstractString, parsed, license_policy::S
         requirement = "an OSI-approved or FSF-libre approved path"
         policy = ReuseLicensing.AnyOf(
             ReuseLicensing.OSIApproved(),
-            ReuseLicensing.FSFLibre()
+            ReuseLicensing.FSFLibre(),
         )
     elseif license_policy === :osi_approved
         requirement = "an OSI-approved path"
@@ -233,7 +246,7 @@ function validate_approved_path(which::AbstractString, parsed, license_policy::S
     ReuseLicensing.has_approved_license_path(parsed, policy) && return
     throw(ArgumentError(
         "Reuse: $which SPDX license expression `$(parsed.expression)` does not have " *
-        requirement,
+            requirement,
     ))
 end
 
@@ -250,7 +263,7 @@ function PkgTemplates.validate(p::Reuse, t::PkgTemplates.Template)
     p.license_policy in (:general_registry, :free, :osi_approved, :none) ||
         throw(ArgumentError(
             "Reuse: license_policy must be `:general_registry`, `:free`, `:osi_approved`, " *
-            "or `:none`, got \"$(p.license_policy)\""
+                "or `:none`, got \"$(p.license_policy)\"",
         ))
     # License expressions should parse without errors and meet approval requirements.
     parsed = parsed_reuse_licenses(p)
@@ -259,11 +272,15 @@ function PkgTemplates.validate(p::Reuse, t::PkgTemplates.Template)
         validate_approved_path("package", parsed.package_license, p.license_policy)
         validate_approved_path("code", parsed.code_license, p.license_policy)
         validate_approved_path(
-            "infrastructure", parsed.infrastructure_license, p.license_policy)
+            "infrastructure",
+            parsed.infrastructure_license,
+            p.license_policy,
+        )
         validate_approved_path("docs", parsed.docs_license, p.license_policy)
         validate_approved_path("assets", parsed.docs_assets_license, p.license_policy)
     end
-    p.template_dir === nothing || isdir(p.template_dir) ||
+    p.template_dir === nothing ||
+        isdir(p.template_dir) ||
         throw(ArgumentError("Reuse: template_dir `$(p.template_dir)` does not exist"))
     # Check if all LicenseRef-identifiers are covered by at least one file in `license_ref_dir`
     required_licenserefs = union(config.licenserefs, config.package_licenserefs)
@@ -297,7 +314,9 @@ function PkgTemplates.view(p::Reuse, t::PkgTemplates.Template, pkg::AbstractStri
         string.(p.copyright_holders)
     end
     copyright_notice = ReuseLicensing.copyright_notice(
-        string(year(today())), copyright_holders)
+        string(year(today())),
+        copyright_holders,
+    )
     return Dict(
         "PKG" => pkg,
         "COPYRIGHT_HOLDERS" => ReuseLicensing.join_copyright_holders(copyright_holders),
@@ -312,7 +331,7 @@ function PkgTemplates.view(p::Reuse, t::PkgTemplates.Template, pkg::AbstractStri
         "PACKAGE_LICENSE_FILE" => PACKAGE_LICENSE_FILE,
         "README" => readme_destination,
         "REUSE_SPECIFICATION_VERSION" => ReuseLicensing.reuse_specification_version(),
-        "SPDX_LICENSE_LIST_VERSION" => ReuseLicensing.spdx_license_list_version()
+        "SPDX_LICENSE_LIST_VERSION" => ReuseLicensing.spdx_license_list_version(),
     )
 end
 
@@ -325,7 +344,10 @@ function PkgTemplates.hook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abstract
     template = template_path(p, REUSE_TOML_TEMPLATE)
 
     text = PkgTemplates.render_file(
-        template, PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p))
+        template,
+        PkgTemplates.combined_view(p, t, pkg),
+        PkgTemplates.tags(p),
+    )
     PkgTemplates.gen_file(joinpath(pkg_dir, REUSE_TOML_FILE), text)
 
     # Create `LICENSES/`
@@ -369,7 +391,10 @@ function PkgTemplates.hook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abstract
 
         if endswith(src_name, ".txt.mustache")
             text = PkgTemplates.render_file(
-                src, PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p))
+                src,
+                PkgTemplates.combined_view(p, t, pkg),
+                PkgTemplates.tags(p),
+            )
             PkgTemplates.gen_file(dest, text)
         else
             cp(src, dest; force = true)
@@ -385,8 +410,9 @@ function add_julia_spdx_header(path::AbstractString, header::AbstractString)
     lines = split(text, '\n')
     any(
         line -> occursin(REUSE_SPDX_LICENSE_TAG, line),
-        lines[1:min(end, REUSE_HEADER_SCAN_LINES)]
-    ) && return
+        lines[1:min(end, REUSE_HEADER_SCAN_LINES)],
+    ) &&
+        return
 
     PkgTemplates.gen_file(path, header * text)
 end
@@ -413,7 +439,7 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
     license_text = PkgTemplates.render_file(
         license_template_path,
         PkgTemplates.combined_view(p, t, pkg),
-        PkgTemplates.tags(p)
+        PkgTemplates.tags(p),
     )
 
     license_parts = String[license_text]
@@ -445,7 +471,10 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
 
         if endswith(src_name, ".txt.mustache")
             license_text = PkgTemplates.render_file(
-                src, PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p))
+                src,
+                PkgTemplates.combined_view(p, t, pkg),
+                PkgTemplates.tags(p),
+            )
             push!(license_parts, license_text)
         else
             push!(license_parts, normalize_line_endings(read(src, String)))
@@ -454,7 +483,7 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
 
     PkgTemplates.gen_file(
         joinpath(pkg_dir, PACKAGE_LICENSE_FILE),
-        join(chomp.(license_parts), "\n\n") * "\n"
+        join(chomp.(license_parts), "\n\n") * "\n",
     )
 
     # Render the `README_licensing_section` template and append to `README.md` (optional).
@@ -469,7 +498,8 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
     if p.readme_licensing_section && readme_file !== nothing && isfile(readme_file)
         section = PkgTemplates.render_file(
             template,
-            PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p)
+            PkgTemplates.combined_view(p, t, pkg),
+            PkgTemplates.tags(p),
         )
         block = join([REUSE_README_SECTION_START, section, REUSE_README_SECTION_END], "\n")
         readme_text = normalize_line_endings(read(readme_file, String))
@@ -481,7 +511,8 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
     # Add explicit SPDX headers where code is actively developed.
     header = PkgTemplates.render_text(
         REUSE_JULIA_HEADER_TEMPLATE,
-        PkgTemplates.combined_view(p, t, pkg), PkgTemplates.tags(p)
+        PkgTemplates.combined_view(p, t, pkg),
+        PkgTemplates.tags(p),
     )
 
     for T in (PkgTemplates.SrcDir, PkgTemplates.Tests, PkgTemplates.PkgBenchmark)
@@ -500,23 +531,20 @@ function PkgTemplates.posthook(p::Reuse, t::PkgTemplates.Template, pkg_dir::Abst
         section = PkgTemplates.render_file(
             ReuseLicensing.project_toml_metadata_template_path(),
             PkgTemplates.combined_view(p, t, pkg),
-            PkgTemplates.tags(p)
+            PkgTemplates.tags(p),
         )
 
-        PkgTemplates.gen_file(
-            project_file,
-            chomp(text) * "\n\n" * chomp(section) * "\n"
-        )
+        PkgTemplates.gen_file(project_file, chomp(text) * "\n\n" * chomp(section) * "\n")
     end
 
     # Establish reuse lint in GitHub Actions.
     if p.enable_reuse_lint &&
-       PkgTemplates.getplugin(t, PkgTemplates.GitHubActions) !== nothing
+            PkgTemplates.getplugin(t, PkgTemplates.GitHubActions) !== nothing
         workflow_template = template_path(p, REUSE_LINT_WORKFLOW_TEMPLATE)
         workflow_text = PkgTemplates.render_file(
             workflow_template,
             PkgTemplates.combined_view(p, t, pkg),
-            PkgTemplates.tags(p)
+            PkgTemplates.tags(p),
         )
 
         workflow_file = joinpath(pkg_dir, REUSE_LINT_WORKFLOW_FILE)
