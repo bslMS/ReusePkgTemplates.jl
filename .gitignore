@@ -13,9 +13,6 @@
 *.jl.mem
 *.jl.*.mem
 
-# Local editor settings.
-.vscode/settings.json
-
 # macOS filesystem metadata.
 .DS_Store
 

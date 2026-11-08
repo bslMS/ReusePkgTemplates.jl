@@ -1,0 +1,29 @@
+name: Fatou
+on:
+  push:
+    branches:
+      - main
+    tags: ["*"]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fatou:
+    name: Formatting and static lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: jolars/fatou-action@v1
+        with:
+          version: v0.26.1
+          # Run the safe check explicitly; the action defaults to --check alone.
+          format: "false"
+          lint: "false"
+      - name: Report Fatou version
+        run: fatou --version
+      - name: Check safe formatting
+        run: fatou format --safe --check .
+      - name: Lint
+        run: fatou lint .

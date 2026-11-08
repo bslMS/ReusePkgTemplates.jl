@@ -116,12 +116,23 @@ significant trade-offs.
 Follow the official Julia Style Guide:
 https://docs.julialang.org/en/v1/manual/style-guide/
 
-- Match the surrounding code style.
-- Follow the repository's SciML formatting conventions.
-- Use `.JuliaFormatter.toml` for JuliaFormatter.jl.
-- Use `JuliaFormat.toml` for JuliaWorkspaces-based formatting tools when present.
-- Keep equivalent style settings consistent; the two configuration formats
-  are independent.
+- Follow existing architectural and naming conventions; let Fatou determine source
+  formatting.
+- Fatou is the authoritative Julia formatter and static linter.
+  `fatou.toml` defines formatting and lint rules, including `safe = true`.
+- Use the Fatou version pinned in CI for final formatting and lint verification.
+  Other versions may be used during development, but resolve any differences
+  against the CI-pinned version before completion.
+- Write idiomatic Julia and let Fatou determine canonical formatting.
+- After modifying Julia files, run `fatou format --safe .` from the
+  repository root. Before completion, run `fatou format --safe --check .`
+  and `fatou lint .`.
+- Fatou performs static analysis; use Julia/Kaimon for runtime analysis and
+  retain the separate Julia test workflow below.
+- Prefer equivalent parenthesized, comma-separated `@testitem` syntax when
+  space-separated arguments format awkwardly; preserve names, tags, and setup.
+- Document justified lint exceptions; keep formatting and lint fixes separately
+  reviewable.
 - Avoid unrelated formatting changes.
 - Prefer generic functions over unnecessarily restrictive types.
 - Use `!` for functions that mutate their arguments.

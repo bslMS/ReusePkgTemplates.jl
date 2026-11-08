@@ -76,22 +76,21 @@ t = Template(; plugins)
   does not assess legal compatibility between package-level and file-level licenses.
 """
 function with_reuse(
-        plugins = PkgTemplates.Plugin[];
-        copyright_holders::Union{Vector{<:AbstractString}, Nothing} = nothing,
-        package_license::Union{AbstractString, Nothing} = nothing,
-        code_license::Union{AbstractString, Nothing} = nothing,
-        infrastructure_license::Union{AbstractString, Nothing} = nothing,
-        docs_license::Union{AbstractString, Nothing} = nothing,
-        docs_assets_license::Union{AbstractString, Nothing} = nothing,
-        license_ref_dir::Union{AbstractString, Nothing} = nothing,
-        template_dir::Union{AbstractString, Nothing} = nothing,
-        enable_reuse_lint::Bool = true,
-        readme_licensing_section::Bool = false,
-        license_policy::Symbol = :general_registry
+    plugins = PkgTemplates.Plugin[];
+    copyright_holders::Union{Vector{<:AbstractString}, Nothing} = nothing,
+    package_license::Union{AbstractString, Nothing} = nothing,
+    code_license::Union{AbstractString, Nothing} = nothing,
+    infrastructure_license::Union{AbstractString, Nothing} = nothing,
+    docs_license::Union{AbstractString, Nothing} = nothing,
+    docs_assets_license::Union{AbstractString, Nothing} = nothing,
+    license_ref_dir::Union{AbstractString, Nothing} = nothing,
+    template_dir::Union{AbstractString, Nothing} = nothing,
+    enable_reuse_lint::Bool = true,
+    readme_licensing_section::Bool = false,
+    license_policy::Symbol = :general_registry,
 )
-    any(p -> p isa Reuse, plugins) && throw(ArgumentError(
-        "with_reuse: plugins already contain a Reuse plugin."
-    ))
+    any(p -> p isa Reuse, plugins) &&
+        throw(ArgumentError("with_reuse: plugins already contain a Reuse plugin."))
 
     filtered = Any[p for p in plugins if !(p isa PkgTemplates.License)]
 
@@ -106,7 +105,7 @@ function with_reuse(
         template_dir,
         enable_reuse_lint,
         readme_licensing_section,
-        license_policy
+        license_policy,
     )
 
     push!(filtered, !PkgTemplates.License)
@@ -154,7 +153,7 @@ function write_templates(dir::AbstractString; force::Bool = false)
         if isfile(dest) && !force
             throw(ArgumentError(
                 "ReusePkgTemplates: template file `$dest` already exists; " *
-                "pass `force = true` to overwrite it"
+                    "pass `force = true` to overwrite it",
             ))
         end
 

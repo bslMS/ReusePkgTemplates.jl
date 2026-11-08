@@ -1,0 +1,10 @@
+[format]
+line-width = 92
+indent-width = 4
+line-ending = "lf"
+safe = true
+
+[lint]
+# PkgTemplates' documented plugin interface and shared ReuseLicensing helpers are
+# neither exported nor declared public. Keep using these existing interfaces.
+ignore = ["non-public-access"]

@@ -1,0 +1,6 @@
+{
+  "[julia]": {
+    "editor.defaultFormatter": "jolars.fatou",
+    "editor.formatOnSave": true
+  }
+}
