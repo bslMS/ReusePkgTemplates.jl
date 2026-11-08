@@ -411,8 +411,7 @@ function add_julia_spdx_header(path::AbstractString, header::AbstractString)
     any(
         line -> occursin(REUSE_SPDX_LICENSE_TAG, line),
         lines[1:min(end, REUSE_HEADER_SCAN_LINES)],
-    ) &&
-        return
+    ) && return
 
     PkgTemplates.gen_file(path, header * text)
 end

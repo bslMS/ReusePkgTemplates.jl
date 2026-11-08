@@ -40,11 +40,6 @@ between package-level and file-level licensing.
 
 This package is under active development, and public APIs may still change.
 
-Development uses **Fatou v0.25.0** for Julia formatting and static linting,
-configured in [`fatou.toml`](fatou.toml) and pinned in CI. See the
-[contributor tooling and editor setup](CONTRIBUTING.md#fatou-tooling) for
-installation, safe formatting checks, and the temporary guard-formatting caveat.
-
 ## Installation
 
 ```julia

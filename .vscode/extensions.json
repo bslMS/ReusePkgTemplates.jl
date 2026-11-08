@@ -1,6 +1,3 @@
 {
-  "recommendations": [
-    "julialang.language-julia",
-    "jolars.fatou"
-  ]
+  "recommendations": ["jolars.fatou"]
 }
