@@ -116,13 +116,13 @@ significant trade-offs.
 Follow the official Julia Style Guide:
 https://docs.julialang.org/en/v1/manual/style-guide/
 
-- Follow existing architectural and naming conventions; let Fatou determine source 
+- Follow existing architectural and naming conventions; let Fatou determine source
   formatting.
 - Fatou is the authoritative Julia formatter and static linter.
   `fatou.toml` defines formatting and lint rules, including `safe = true`.
-- Use the Fatou version pinned in CI for final formatting and lint verification.  
-Other versions may be used during development, but resolve any differences  
-against the CI-pinned version before completion.
+- Use the Fatou version pinned in CI for final formatting and lint verification.
+  Other versions may be used during development, but resolve any differences
+  against the CI-pinned version before completion.
 - Write idiomatic Julia and let Fatou determine canonical formatting.
 - After modifying Julia files, run `fatou format --safe .` from the
   repository root. Before completion, run `fatou format --safe --check .`

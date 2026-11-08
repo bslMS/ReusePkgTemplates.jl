@@ -91,8 +91,8 @@ tests, verifying generated file contents as well as existence.
 
 ### Fatou tooling
 
-Use [Fatou](https://fatou.dev/) for canonical Julia formatting and static linting. 
-Install the version pinned in `.github/workflows/Fatou.yml`, following the official 
+Use [Fatou](https://fatou.dev/) for canonical Julia formatting and static linting.
+Install the version pinned in `.github/workflows/Fatou.yml`, following the official
 [installation instructions](https://fatou.dev/installation.html).
 
 The repository's `fatou.toml` defines formatting and lint rules, including
