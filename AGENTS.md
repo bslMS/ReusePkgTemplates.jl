@@ -39,6 +39,10 @@ Repository layout:
 
 - Use Julia 1.13 for routine development unless another compatible version
   is explicitly selected.
+- Treat `[compat].julia` in `Project.toml` as the authoritative minimum
+  supported Julia version (currently 1.12).
+- Verify compatibility against the minimum supported Julia version when
+  changing package behavior or dependencies.
 - Keep development-tool requirements separate from package compatibility:
   Kaimon and TestItemApp require Julia 1.12 or newer.
 - Use the project's own environment.
@@ -166,10 +170,10 @@ julia --project=. -e 'using Pkg; Pkg.test()'
 - Generate test packages in temporary directories, following the existing
   `WithTempdir` setup. Check generated file content as well as file existence
   when changing templates or generation behavior.
-- Preserve the minimum Julia version in `Project.toml`, currently 1.10.
+- Preserve the minimum Julia version in `Project.toml`, currently 1.12.
 - Test changes involving Julia language features, dependencies, or
-  version-sensitive behavior with Julia 1.10 as well as the development
-  version when available.
+  version-sensitive behavior with Julia 1.12 and the latest stable Julia 1.x
+  release, as well as the development version when different and available.
 
 ## Generated Files and Test Fixtures
 

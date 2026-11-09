@@ -16,7 +16,7 @@ PkgTemplates = "0.7"
 Reexport = "1.2"
 ReuseLicensing = "0.2"
 TOML = "1"
-julia = "1.10"
+julia = "1.12"
 
 [reuse_licensing]
 reuse_specification_version = "3.3"

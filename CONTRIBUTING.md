@@ -61,8 +61,11 @@ for package-level licensing changes.
 ## Code and tests
 
 Add regression tests for bug fixes and document changes to public behavior.
-Use Julia 1.13 for development; the package supports Julia 1.10 and newer.
-Test version-sensitive changes against both Julia 1.10 and the development version.
+Use Julia 1.13 for development; the package supports Julia 1.12 and subsequent 1.x releases.
+This minimum applies to ReusePkgTemplates.jl itself; generated packages use the Julia
+compatibility configured through PkgTemplates.
+Test version-sensitive changes against Julia 1.12 and the latest stable Julia 1.x release,
+as well as the development version when different.
 
 ### Running tests
 
@@ -79,7 +82,7 @@ To run an individual test item:
 juliati --filter 'name == "test case has expected files and content"'
 ```
 
-TestItemApp requires Julia 1.12 or newer. For Julia 1.10 or without TestItemApp, use:
+TestItemApp requires Julia 1.12 or newer. Without TestItemApp, use:
 
 ```sh
 julia --project=. -e 'using Pkg; Pkg.test()'
